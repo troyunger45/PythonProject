@@ -1,1 +1,5 @@
 print("hello")
+print("This is new")
+print("this is newest")
+print("more")
+print("mas")

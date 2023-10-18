@@ -1,7 +1,5 @@
-print("hello")
-print("This is new")
-print("this is newest")
-print("more")
-print("mas")
-print("1")
-print("this is from the laptop")
+
+def main():
+    print("welcome to main")
+
+main()

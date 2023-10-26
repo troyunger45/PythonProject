@@ -1,4 +1,4 @@
-#Import Tktinker NEEDED to run program.
+#Import Tkinker NEEDED to run program.
 from tkinter import *
 
 #Helps create and manage the window MUST be done before creating a widget.

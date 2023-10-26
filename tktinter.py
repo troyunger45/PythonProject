@@ -12,7 +12,7 @@ root.title("Simple Calculator")
 ------------------ LABLES/PACK/GRID ------------------
 #Creating label widget.
 myLabel1 = Label(root, text="Hello world!") #Can also add to screen here instead with .grid(row=0, column=0) not a great practice.
-myLabel2 = Label(root, text="My name is Troy Unger!") #Can also add to screen here instead with .pack()
+myLabel2 = Label(root, text="My name is Troy Unger!") #Can also add to screen here instead with .pack() not a great practice.
 
 #Shoving myLabel1 on the screen with pack.
 #myLabel1.pack()

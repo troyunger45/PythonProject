@@ -8,8 +8,8 @@ root.geometry('500x500')
 class Car:
     def __init__(self):
         self.model = ""
+        self.year = 2013
         '''
-        self.year = int(input("Enter the year of your car:  "))
         self.milage = int(input("Enter your car's milage:   "))
         self.drivetrain = input("Enter your car's drivetrain:   ")
         self.color = input("Enter the color of your car:    ")
@@ -17,9 +17,14 @@ class Car:
 
     def DisplayInfo(self):
         self.model = e.get()
-        labelOne = Label(root, text= self.model)
-        labelOne.pack()
-        labelOne.after(1000, lambda: labelOne.destroy())
+        top = Toplevel()
+        labelModel = Label(top, text= self.model)
+        labelModel.pack()
+        #labelModel.after(1000, lambda: labelModel.destroy())
+        labelYear = Label(top, text=self.year)
+        labelYear.pack()
+
+        top.after(1000, lambda: top.destroy())
         '''
         print(self.year)
         print(self.milage)
@@ -44,6 +49,8 @@ def main():
     button =Button(root, text="Show INFO", padx=40, pady=20 ,command=carOne.DisplayInfo)
     button.pack()
     #carOne.HealthCheck()
+    
+
 
 main()
 root.mainloop()

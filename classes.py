@@ -23,7 +23,6 @@ class Car:
         #labelModel.after(1000, lambda: labelModel.destroy())
         labelYear = Label(top, text=self.year)
         labelYear.pack()
-
         top.after(1000, lambda: top.destroy())
         '''
         print(self.year)
@@ -44,13 +43,12 @@ def main():
     global e
     e = Entry(root, width=35, borderwidth=5)
     e.pack(padx=5,pady=5)
+    e.insert(0, "Please enter your car's model:")
     carOne = Car()
     global button
     button =Button(root, text="Show INFO", padx=40, pady=20 ,command=carOne.DisplayInfo)
     button.pack()
     #carOne.HealthCheck()
     
-
-
 main()
 root.mainloop()

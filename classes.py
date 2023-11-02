@@ -17,23 +17,18 @@ class Car:
 
         global count
 
-        for i in range(5):
-            input = e.get()
-            if count == 0:
-                self.model = input
-                break
-            elif count == 1:
-                self.year = input
-                break 
-            elif count == 2:
-                self.milage = input
-                break 
-            elif count == 3:
-                self.drivetrain = input
-                break 
-            elif count == 4:
-                self.color = input
-                break      
+        input = e.get()
+        
+        if count == 0:
+            self.model = input
+        elif count == 1:
+            self.year = input
+        elif count == 2:
+            self.milage = input
+        elif count == 3:
+            self.drivetrain = input
+        elif count == 4:
+            self.color = input    
         
         count = count + 1
         

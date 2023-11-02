@@ -7,29 +7,53 @@ root.geometry('500x500')
 
 class Car:
     def __init__(self):
-        self.model = ""
-        self.year = 2013
-        '''
-        self.milage = int(input("Enter your car's milage:   "))
-        self.drivetrain = input("Enter your car's drivetrain:   ")
-        self.color = input("Enter the color of your car:    ")
-        '''
+        self.model = str()
+        self.year = int()
+        self.milage = int()
+        self.drivetrain = str()
+        self.color = str()
+        
+    def EnterInfo(self):
+
+        global count
+
+        for i in range(5):
+            input = e.get()
+            if count == 0:
+                self.model = input
+                break
+            elif count == 1:
+                self.year = input
+                break 
+            elif count == 2:
+                self.milage = input
+                break 
+            elif count == 3:
+                self.drivetrain = input
+                break 
+            elif count == 4:
+                self.color = input
+                break      
+        
+        count = count + 1
+        
 
     def DisplayInfo(self):
-        self.model = e.get()
         top = Toplevel()
+        
         labelModel = Label(top, text= self.model)
         labelModel.pack()
         #labelModel.after(1000, lambda: labelModel.destroy())
         labelYear = Label(top, text=self.year)
         labelYear.pack()
+        labelMilage = Label(top, text=self.milage)
+        labelMilage.pack()
+        labelDrivetrian = Label(top, text=self.drivetrain)
+        labelDrivetrian.pack()
+        labelColor = Label(top, text=self.color)
+        labelColor.pack()
         top.after(1000, lambda: top.destroy())
-        '''
-        print(self.year)
-        print(self.milage)
-        print(self.drivetrain)
-        print(self.color)
-        '''
+    
 
     def HealthCheck(self):
         if (2023 - self.year) >= 10 or self.milage >= 90000:
@@ -43,10 +67,14 @@ def main():
     global e
     e = Entry(root, width=35, borderwidth=5)
     e.pack(padx=5,pady=5)
-    e.insert(0, "Please enter your car's model:")
+    global carOne
     carOne = Car()
-    global button
+    global count
+    count = 0
+    
     button =Button(root, text="Show INFO", padx=40, pady=20 ,command=carOne.DisplayInfo)
+    button2 = Button(root, text="Enter INFO", padx=40, pady=20 ,command=carOne.EnterInfo)
+    button2.pack()
     button.pack()
     #carOne.HealthCheck()
     

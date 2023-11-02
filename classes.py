@@ -19,9 +19,9 @@ class Car:
         if count == 0:
             self.model = input
         elif count == 1:
-            self.year = input
+            self.year = int(input)
         elif count == 2:
-            self.milage = input
+            self.milage = int(input)
         elif count == 3:
             self.drivetrain = input
         elif count == 4:
@@ -31,6 +31,7 @@ class Car:
 
     def DisplayInfo(self):
         top = Toplevel()
+        top.geometry('200x120')
         labelModel = Label(top, text= self.model)
         labelModel.pack()
         labelYear = Label(top, text=self.year)
@@ -41,14 +42,18 @@ class Car:
         labelDrivetrian.pack()
         labelColor = Label(top, text=self.color)
         labelColor.pack()
-        top.after(2000, lambda: top.destroy())
+        top.after(3000, lambda: top.destroy())
     
 
     def HealthCheck(self):
+        top2 = Toplevel()
         if (2023 - self.year) >= 10 or self.milage >= 90000:
-            print("Your car is getting up there in age you might want to get it looked at.")
+            labelOld =Label(top2, text="Your car is getting up there in age you might want to get it looked at.")
+            labelOld.pack()
         else:
-            print("Your car still has a lot of life in it!")
+            labelNew =Label(top2, text="Your car still has a lot of life in it!")
+            labelNew.pack()
+        top2.after(3000, lambda: top2.destroy())
 
 def InsertText():
     e.delete(0, END)
@@ -77,8 +82,10 @@ def main():
     InsertText()
     button =Button(root, text="Show INFO", padx=40, pady=20 ,command=carOne.DisplayInfo)
     button2 = Button(root, text="Enter INFO", padx=40, pady=20 ,command=carOne.EnterInfo)
+    button3 = Button(root, text="Health Check-Up!", padx=40, pady=20 ,command=carOne.HealthCheck)
     button2.pack()
     button.pack()
+    button3.pack()
     #carOne.HealthCheck()
     
 main()

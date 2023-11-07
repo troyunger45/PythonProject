@@ -130,6 +130,13 @@ def main():
     button2.pack()
     button.pack()
     button3.pack()
+
+#Empty function just to push code since github does NOT recognize comments as changes PLEASE DELETE 
+def empty(){
+ print("poop")
+}
+
+
 #Calling main function.    
 main()
 #Calling the main loop for tkinter to run.

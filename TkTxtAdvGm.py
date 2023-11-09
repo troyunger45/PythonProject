@@ -1,5 +1,6 @@
 #Imports tkinter.
 from tkinter import *
+from tkinter import messagebox
 
 class Game:
 
@@ -8,7 +9,8 @@ class Game:
         self.menu = menu
         menu.title("Text Adventure Game!")
         menu.geometry('500x500')
-        menu.configure(bg="blue")
+        # Create the PhotoImage here.
+        self.bg = PhotoImage(file="images/picture.png")
         #Calls InsertMenuWidgets
         self.InsertMenuWidgets()
         #Defines class attributes.
@@ -18,13 +20,16 @@ class Game:
         self.turn = 0
 
     def InsertMenuWidgets(self):
-        custom_font =("Helvetica", 25, "bold")
-        menuLabel = Label(self.menu, text="Welcome to Our\nText Adventure Game", font=custom_font, bg="cyan", fg="navy", padx= 50, pady= 50)
-        menuLabel.pack(padx=20,pady=20)
-        startButton = Button(self.menu, text="Start Game!", command=self.InsertGameWidgets, padx=50, pady=25)
-        startButton.pack(padx=10,pady=10)
-        descriptionButton = Button(self.menu, text="Game Description.", command=self.InsertDescriptionWidgets, padx=32, pady=25)
-        descriptionButton.pack(padx=10,pady=10)
+        my_canvas = Canvas(self.menu,width=500,height=500)
+        my_canvas.pack(fill="both", expand=True)
+        my_canvas.create_image(0,0, image=self.bg, anchor='nw')
+        custom_fontLabel =("Helvetica", 25, "bold")
+        custom_fontButton =("Helvetica", 10, "bold")
+        my_canvas.create_text(250,250, text="Welcome to Our\nText Adventure Game", font=custom_fontLabel, fill="navy")
+     
+        startButton = Button(self.menu, text="Start Game!",command=self.InsertGameWidgets,padx=50,pady=25,bg="navy",fg="cyan",font=custom_fontButton)
+        descriptionButton = Button(self.menu, text="Game Description.",command=self.InsertDescriptionWidgets,padx=32,pady=25,bg="navy",fg="cyan",font=custom_fontButton)
+        startButton_window = my_canvas.create_window(250,150, anchor='nw', window=startButton)
     
     def InsertGameWidgets(self):
         #Destroys the menu window.
@@ -33,6 +38,9 @@ class Game:
         gameScreen.title("Playing the game...")
         gameScreen.geometry('500x500')
         gameScreen.configure(bg="blue")
+        custom_font1 =("Helvetica", 10, "bold")
+        backButton = Button(gameScreen,text="Back to menu.",command=lambda: self.BackToMenu(gameScreen),padx=32,pady=25,fg="cyan",bg="navy",font=custom_font1)
+        backButton.pack(padx=10, pady=10)
         #Calling the main loop for the menu to run.
         gameScreen.mainloop()
 
@@ -43,21 +51,25 @@ class Game:
         descriptionScreen.title("Game Description")
         descriptionScreen.geometry('500x500')
         descriptionScreen.configure(bg="blue")
-        custom_font =("Helvetica", 15, "bold")
-        descriptionLabel = Label(descriptionScreen, text="This is an old style\ntext adventure game.", font=custom_font, bg="cyan", fg="navy", padx= 50, pady= 50)
+        custom_fontLabel =("Helvetica", 15, "bold")
+        custom_fontButton =("Helvetica", 10, "bold")
+        descriptionLabel = Label(descriptionScreen, text="This is an old style\ntext adventure game.", font=custom_fontLabel, bg="cyan", fg="navy", padx= 50, pady= 50)
         descriptionLabel.pack()
-        backButton = Button(descriptionScreen,text="Back to menu.",command=lambda: self.BackToMenuFromDescription(descriptionScreen) , padx=32, pady=25)
+        backButton = Button(descriptionScreen,text="Back to menu.",command=lambda: self.BackToMenu(descriptionScreen),padx=32, pady=25,fg="cyan", bg="navy",font=custom_fontButton)
         backButton.pack(padx=10, pady=10)
         #Calling the main loop for the menu to run.
         descriptionScreen.mainloop()
     
-    def BackToMenuFromDescription(self, descriptionScreen):
+    def BackToMenu(self, screen):
+        screen.destroy()
+        
         self.menu = Tk()
         self.menu.title("Text Adventure Game!")
         self.menu.geometry('500x500')
         self.menu.configure(bg="blue")
         self.InsertMenuWidgets()
-        descriptionScreen.destroy()
+        self.menu.deiconify()
+        
 
 #Main function.
 def main():

@@ -1,82 +1,70 @@
-import tkinter as tk
-from tkinter import messagebox
+from tkinter import *
 
-class TextAdventureGame:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Text Adventure Game")
+class Game:
 
-        self.current_room = None
+    def __init__(self, menu):
+        # Adds formatting for the menu window.
+        self.menu = menu
+        menu.title("Text Adventure Game!")
+        menu.geometry('500x500')
+        # Create the PhotoImage here.
+        self.bg = PhotoImage(file="images/picture.png")
+        # Calls InsertMenuWidgets
+        self.InsertMenuWidgets()
+        # Defines class attributes.
+        self.health = 0
+        self.xp = 0
+        self.name = ""
+        self.turn = 0
 
-        self.create_rooms()
-        self.create_widgets()
+    def InsertMenuWidgets(self):
+        # Clear the menu window if it's not empty
+        for widget in self.menu.winfo_children():
+            widget.destroy()
 
-    def create_rooms(self):
-        # Define rooms and their connections
-        self.rooms = {
-            "start": {
-                "name": "Start Room",
-                "description": "You are in the starting room.",
-                "exits": {"east": "kitchen", "west": "living_room"},
-                "items": ["key"],
-            },
-            "kitchen": {
-                "name": "Kitchen",
-                "description": "You are in the kitchen.",
-                "exits": {"west": "start"},
-                "items": ["knife"],
-            },
-            "living_room": {
-                "name": "Living Room",
-                "description": "You are in the living room.",
-                "exits": {"east": "start"},
-                "items": [],
-            },
-        }
+        my_canvas = Canvas(self.menu, width=500, height=500)
+        my_canvas.pack(fill="both", expand=True)
+        my_canvas.create_image(0, 0, image=self.bg, anchor='nw')
+        custom_fontLabel = ("Helvetica", 25, "bold")
+        custom_fontButton = ("Helvetica", 10, "bold")
+        my_canvas.create_text(250, 250, text="Welcome to Our\nText Adventure Game", font=custom_fontLabel, fill="navy")
 
-    def create_widgets(self):
-        self.description_label = tk.Label(
-            self.root, text="Welcome to the Text Adventure Game!"
-        )
-        self.description_label.pack()
+        startButton = Button(self.menu, text="Start Game!", command=self.InsertGameWidgets, padx=50, pady=25, bg="navy", fg="cyan", font=custom_fontButton)
+        descriptionButton = Button(self.menu, text="Game Description.", command=self.InsertDescriptionWidgets, padx=32, pady=25, bg="navy", fg="cyan", font=custom_fontButton)
+        startButton_window = my_canvas.create_window(250, 150, anchor='nw', window=startButton)
 
-        self.input_entry = tk.Entry(self.root)
-        self.input_entry.pack()
+    def InsertGameWidgets(self):
+        # Clear the menu window if it's not empty
+        for widget in self.menu.winfo_children():
+            widget.destroy()
 
-        self.submit_button = tk.Button(self.root, text="Submit", command=self.process_input)
-        self.submit_button.pack()
+        my_canvas = Canvas(self.menu, width=500, height=500)
+        my_canvas.pack(fill="both", expand=True)
+        my_canvas.create_image(0, 0, image=self.bg, anchor='nw')
+        custom_font1 = ("Helvetica", 10, "bold")
+        backButton = Button(self.menu, text="Back to menu.", command=self.InsertMenuWidgets, padx=32, pady=25, fg="cyan", bg="navy", font=custom_font1)
+        backButton_window = my_canvas.create_window(250, 150, anchor='nw', window=backButton)
 
-        self.command_history = tk.Text(self.root, width=40, height=10)
-        self.command_history.pack()
+    def InsertDescriptionWidgets(self):
+        # Clear the menu window if it's not empty
+        for widget in self.menu.winfo_children():
+            widget.destroy()
 
-        self.move("start")
+        custom_fontLabel = ("Helvetica", 15, "bold")
+        custom_fontButton = ("Helvetica", 10, "bold")
+        descriptionLabel = Label(self.menu, text="This is an old style\ntext adventure game.", font=custom_fontLabel, bg="cyan", fg="navy", padx=50, pady=50)
+        descriptionLabel.pack()
+        backButton = Button(self.menu, text="Back to menu.", command=self.InsertMenuWidgets, padx=32, pady=25, fg="cyan", bg="navy", font=custom_fontButton)
+        backButton.pack(padx=10, pady=10)
 
-    def move(self, room_name):
-        self.current_room = room_name
-        room = self.rooms[room_name]
-        description = room["description"]
-        items = room["items"]
-        self.description_label.config(text=description)
-        self.command_history.insert("1.0", f"You are in the {room['name']}.\n")
-        self.command_history.insert("1.0", description + "\n")
-        if items:
-            self.command_history.insert("1.0", "You see: " + ", ".join(items) + "\n")
+# Main function.
+def main():
+    # Creates the menu window.
+    menu = Tk()
+    # Creates Game object to run the first instance of the game.
+    gameOne = Game(menu)
+    # Calling the main loop for the menu to run.
+    menu.mainloop()
 
-    def process_input(self):
-        command = self.input_entry.get()
-        self.command_history.insert("1.0", "> " + command + "\n")
-        self.input_entry.delete(0, "end")
-
-        if command.lower() == "quit":
-            self.root.destroy()
-        elif command.lower() == "help":
-            self.command_history.insert("1.0", "Available commands: quit, help, look\n")
-        elif command.lower() == "look":
-            self.move(self.current_room)
-        else:
-            self.command_history.insert("1.0", "I don't understand that command.\n")
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    game = TextAdventureGame(root)
-    root.mainloop()
+# Calling main function.
+main()

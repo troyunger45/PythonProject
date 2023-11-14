@@ -130,6 +130,7 @@ def main():
     button2.pack()
     button.pack()
     button3.pack()
+    
 #Calling main function.    
 main()
 #Calling the main loop for tkinter to run.

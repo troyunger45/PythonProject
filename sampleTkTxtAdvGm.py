@@ -1,34 +1,34 @@
+#Imports tkinter.
+from tkinter import *
 
-import tkinter as tk
+#Creates the main window.
+root = Tk()
+#Adds formatting for main window named root.
+root.title("ImgBckgrnd")
+root.geometry('500x500')
+bg = PhotoImage(file="c:/Users/Owner/Downloads/IMG_20230927_141728_855.png")
 
-# Create a tkinter window
-window = tk.Tk()
-window.title("Text Adventure Game")
+class testing:
+    def __init__(self):
+        self.test()
+    
+    def test(self):
+        my_canvas = Canvas(root, width=500, height=500)
+        my_canvas.pack(fill="both", expand= True)
+        
+        my_canvas.create_image(0,0, image=bg, anchor='nw' )
 
-# Create a label for displaying the scenario
-scenario_label = tk.Label(window, text="Welcome to the Text Adventure Game!", wraplength=300)
-scenario_label.pack()
+        my_canvas.create_text(250,250,text="Welcome",font=("Helvetica", 50,),fill="white")
 
-# Create buttons for the three options
-button1 = tk.Button(window, text="Option 1")
-button2 = tk.Button(window, text="Option 2")
-button3 = tk.Button(window, text="Option 3")
-button1.pack()
-button2.pack()
-button3.pack()
+        button1 = Button(root, text="start")
+        button2 = Button(root, text="reset scores")
+        button3 = Button(root, text="exit")
 
-# Function to handle button clicks
-def on_button_click(option):
-    # Replace this with your game logic for each option
-    if option == 1:
-        scenario_label.config(text="You chose Option 1. Now, what's your next move?")
-    elif option == 2:
-        scenario_label.config(text="You chose Option 2. What's your next step?")
-    else:
-        scenario_label.config(text="You chose Option 3. Where will you go next?")
+        button1_window = my_canvas.create_window(10,10,anchor='nw', window=button1)
+        button2_window = my_canvas.create_window(50,10,anchor='nw', window=button2)
+        button3_window = my_canvas.create_window(130,10,anchor='nw', window=button3)
+def main():
+    testOne = testing()
+    root.mainloop()
 
-button1.config(command=lambda: on_button_click(1))
-button2.config(command=lambda: on_button_click(2))
-button3.config(command=lambda: on_button_click(3))
-
-window.mainloop()
+main()

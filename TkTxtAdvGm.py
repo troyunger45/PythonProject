@@ -5,7 +5,7 @@ class Game:
     def __init__(self, menu):
         # Adds formatting for the menu window.
         self.menu = menu
-        menu.title("Text Adventure Game!")
+        self.title = menu.title("")
         menu.geometry('890x500')
         # Create the PhotoImage here.
         self.bg = PhotoImage(file="images/picture2.png")
@@ -21,7 +21,7 @@ class Game:
         self.scenarios = [
             "Scenario 1: 1choice1 or 2choice2",
             "Scenario 2: 2choice1 or 2choice2",
-            "A monser attacks what will you do: fight or run",
+            "A monster attacks what will you do: fight or run",
             "Scenario 4: 4choice1 or 4choice2",
             "Scenario 5: 5choice1 or 5choice2", 
         ]
@@ -47,6 +47,7 @@ class Game:
             widget.destroy()
         self.scenarioCount = 0
 
+        self.title = self.menu.title("Text Adventure Game!")
         my_canvas = Canvas(self.menu, width=500, height=500)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(0, 0, image=self.bg, anchor='nw')
@@ -64,6 +65,7 @@ class Game:
         for widget in self.menu.winfo_children():
             widget.destroy()
 
+        self.title = self.menu.title("Playing The Game!")
         my_canvas = Canvas(self.menu, width=500, height=500)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(0, 0, image=self.bg2, anchor='nw')
@@ -71,23 +73,25 @@ class Game:
         custom_font2 = ("Helvetica", 15, "bold")
         backButton = Button(self.menu, text="Exit game.", command=self.InsertMenuWidgets, padx=51.5, pady=25, fg="cyan", bg="navy", font=custom_font1)
         backButton_window = my_canvas.create_window(170, 370, anchor='nw', window=backButton)
+        my_canvas.create_text(250, 70, text="Enter choice here:", font=custom_font2, fill="navy", anchor="center")
 
         # Display scenario in the text box
         self.text_box = Text(self.menu, width=50, height=7, wrap=WORD, font=custom_font1, bg="cyan", fg="navy")
         self.text_box.insert(END, self.scenarios[0] )
         text_box_window = my_canvas.create_window(80, 130, anchor='nw', window=self.text_box)
+        self.text_box.config(state=DISABLED)
 
         # Entry for user input
         user_input = Entry(self.menu, font=custom_font1, width=50, bg="cyan", fg="navy")
         user_input_window = my_canvas.create_window(80, 90, anchor='nw', window=user_input)
 
         # Button to process user input
-        response_button = Button(self.menu, text="Display response.", padx=31, pady=25, fg="cyan", bg="navy", font=custom_font1, command=lambda: self.process_user_input(user_input.get()))
+        response_button = Button(self.menu, text="Display response.", padx=31, pady=25, fg="cyan", bg="navy", font=custom_font1, command=lambda: self.ProcessUserInput(user_input.get()))
         response_button_window = my_canvas.create_window(170, 270, anchor='nw', window=response_button)
 
-    def process_user_input(self, user_input):
-        # Example: Process user input and display a response
-        
+    def ProcessUserInput(self, user_input):
+        # Process user input and display a response
+        self.text_box.config(state=NORMAL)
         self.text_box.delete(1.0, END)  # Clear previous text
         if self.scenarioCount < (len(self.scenarios)- 1):
             for i in range(len(self.scenarios)):
@@ -102,12 +106,15 @@ class Game:
                 else:
                     response_text = f"You chose '{user_input}'. This is not a valid response."
                     self.text_box.insert(END, response_text + "\n")
+                    self.scenarioCount = self.scenarioCount - 1
                 break   
             self.scenarioCount = self.scenarioCount + 1
             self.text_box.insert(END, self.scenarios[self.scenarioCount])
 
         elif self.scenarioCount >= (len(self.scenarios)-1):
             self.text_box.insert(END, "All done! Please press exit game to restart!")
+        
+        self.text_box.config(state=DISABLED)
 
 
     def InsertDescriptionWidgets(self):
@@ -115,6 +122,7 @@ class Game:
         for widget in self.menu.winfo_children():
             widget.destroy()
 
+        self.title = self.menu.title("Describing The Game.")
         custom_fontLabel = ("Helvetica", 15, "bold")
         custom_fontButton = ("Helvetica", 10, "bold")
         my_canvas = Canvas(self.menu, width=500, height=500)

@@ -18,11 +18,34 @@ class Game:
         self.xp = 0
         self.name = ""
         self.turn = 0
+        self.scenarios = [
+            "Scenario 1: 1choice1 or 2choice2",
+            "Scenario 2: 2choice1 or 2choice2",
+            "A monser attacks what will you do: fight or run",
+            "Scenario 4: 4choice1 or 4choice2",
+            "Scenario 5: 5choice1 or 5choice2", 
+        ]
+        self.scenarioResponse = [
+            ["1response1", "1response2"],
+            ["2response1", "2response2"],
+            ["You chose to fight!", "You Chose to run!"],
+            ["4response1", "4response2"],
+            ["5response1", "5response2"],
+        ]
+        self.scenarioChoice = [
+            ["1choice1", "1choice2"],
+            ["2choice1", "2choice2"],
+            ["fight", "run"],
+            ["4choice1", "4choice2"],
+            ["5choice1", "5choice2"],
+        ]
+        self.scenarioCount = 0
 
     def InsertMenuWidgets(self):
-        # Clear the menu window if it's not empty
+        # Clear the menu window if it's not empty and set the counter back to the start.
         for widget in self.menu.winfo_children():
             widget.destroy()
+        self.scenarioCount = 0
 
         my_canvas = Canvas(self.menu, width=500, height=500)
         my_canvas.pack(fill="both", expand=True)
@@ -48,37 +71,44 @@ class Game:
         custom_font2 = ("Helvetica", 15, "bold")
         backButton = Button(self.menu, text="Exit game.", command=self.InsertMenuWidgets, padx=51.5, pady=25, fg="cyan", bg="navy", font=custom_font1)
         backButton_window = my_canvas.create_window(170, 370, anchor='nw', window=backButton)
-        my_canvas.create_text(250, 70, text="Enter response here:", font=custom_font2, fill="navy", anchor="center")
-        
-        # Entry for user input
-        user_input = Entry(self.menu, font=custom_font1, width=50,bg="cyan",fg="navy")
-        user_input_window = my_canvas.create_window(80, 90, anchor='nw', window=user_input)
 
-        # Button to display response
-        response_button = Button(self.menu, text="Display response.", command=lambda: self.handle_response(user_input.get()), padx=31, pady=25, fg="cyan", bg="navy", font=custom_font1)
-        response_button_window = my_canvas.create_window(170, 270, anchor='nw', window=response_button)
-
-        # Text box
-        self.text_box = Text(self.menu, width=50, height=7, wrap=WORD, font=custom_font1,bg="cyan",fg="navy")
+        # Display scenario in the text box
+        self.text_box = Text(self.menu, width=50, height=7, wrap=WORD, font=custom_font1, bg="cyan", fg="navy")
+        self.text_box.insert(END, self.scenarios[0] )
         text_box_window = my_canvas.create_window(80, 130, anchor='nw', window=self.text_box)
 
-        # Display initial scenario
-        self.display_scenario("Welcome to the Text Adventure Game! What will you do next? explore or fight?")
+        # Entry for user input
+        user_input = Entry(self.menu, font=custom_font1, width=50, bg="cyan", fg="navy")
+        user_input_window = my_canvas.create_window(80, 90, anchor='nw', window=user_input)
 
-    def display_scenario(self, scenario):
-        # Clear existing content in the text box
-        self.text_box.delete(1.0, END)
-        # Display the scenario in the text box
-        self.text_box.insert(END, f"{scenario}\n")
+        # Button to process user input
+        response_button = Button(self.menu, text="Display response.", padx=31, pady=25, fg="cyan", bg="navy", font=custom_font1, command=lambda: self.process_user_input(user_input.get()))
+        response_button_window = my_canvas.create_window(170, 270, anchor='nw', window=response_button)
 
-    def handle_response(self, user_input):
-        # Handle different user responses
-        if "explore" in user_input.lower():
-            self.display_scenario("You decide to explore the mysterious cave.")
-        elif "fight" in user_input.lower():
-            self.display_scenario("A fierce dragon appears! Get ready for battle.")
-        else:
-            self.display_scenario("I'm sorry, I didn't understand that. Please try again.")
+    def process_user_input(self, user_input):
+        # Example: Process user input and display a response
+        
+        self.text_box.delete(1.0, END)  # Clear previous text
+        if self.scenarioCount < (len(self.scenarios)- 1):
+            for i in range(len(self.scenarios)):
+                if user_input == self.scenarioChoice[self.scenarioCount][0]:
+                    response_text = self.scenarioResponse[self.scenarioCount][0]
+                    self.text_box.insert(END, response_text + "\n")
+                    if self.scenarioCount == 2 and user_input == self.scenarioChoice[2][0]:
+                        self.text_box.insert(END, "you are fighting the monster!" + "\n")
+                elif user_input == self.scenarioChoice[self.scenarioCount][1]:
+                    response_text = self.scenarioResponse[self.scenarioCount][1]
+                    self.text_box.insert(END, response_text + "\n")  
+                else:
+                    response_text = f"You chose '{user_input}'. This is not a valid response."
+                    self.text_box.insert(END, response_text + "\n")
+                break   
+            self.scenarioCount = self.scenarioCount + 1
+            self.text_box.insert(END, self.scenarios[self.scenarioCount])
+
+        elif self.scenarioCount >= (len(self.scenarios)-1):
+            self.text_box.insert(END, "All done! Please press exit game to restart!")
+
 
     def InsertDescriptionWidgets(self):
         # Clear the menu window if it's not empty

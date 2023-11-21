@@ -1,34 +1,32 @@
-#Imports tkinter.
-from tkinter import *
+import tkinter as tk
 
-#Creates the main window.
-root = Tk()
-#Adds formatting for main window named root.
-root.title("ImgBckgrnd")
-root.geometry('500x500')
-bg = PhotoImage(file="c:/Users/Owner/Downloads/IMG_20230927_141728_855.png")
+def open_custom_dialog():
+    custom_dialog = tk.Toplevel(root)
+    custom_dialog.title("Custom Dialog")
 
-class testing:
-    def __init__(self):
-        self.test()
-    
-    def test(self):
-        my_canvas = Canvas(root, width=500, height=500)
-        my_canvas.pack(fill="both", expand= True)
-        
-        my_canvas.create_image(0,0, image=bg, anchor='nw' )
+    label = tk.Label(custom_dialog, text="Choose an option:")
+    label.pack(pady=10)
 
-        my_canvas.create_text(250,250,text="Welcome",font=("Helvetica", 50,),fill="white")
+    # Variable to store the selected option
+    selected_option = tk.StringVar()
 
-        button1 = Button(root, text="start")
-        button2 = Button(root, text="reset scores")
-        button3 = Button(root, text="exit")
+    # Create radio buttons
+    radio_button1 = tk.Radiobutton(custom_dialog, text="Option 1", variable=selected_option, value="Option 1")
+    radio_button2 = tk.Radiobutton(custom_dialog, text="Option 2", variable=selected_option, value="Option 2")
 
-        button1_window = my_canvas.create_window(10,10,anchor='nw', window=button1)
-        button2_window = my_canvas.create_window(50,10,anchor='nw', window=button2)
-        button3_window = my_canvas.create_window(130,10,anchor='nw', window=button3)
-def main():
-    testOne = testing()
-    root.mainloop()
+    radio_button1.pack()
+    radio_button2.pack()
 
-main()
+    # Button to close the dialog
+    button_close = tk.Button(custom_dialog, text="Close", command=custom_dialog.destroy)
+    button_close.pack()
+
+# Create the main Tkinter window
+root = tk.Tk()
+
+# Create a button to open the custom dialog
+open_button = tk.Button(root, text="Open Custom Dialog", command=open_custom_dialog)
+open_button.pack(pady=20)
+
+# Start the Tkinter event loop
+root.mainloop()

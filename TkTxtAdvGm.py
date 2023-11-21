@@ -22,6 +22,7 @@ class Game:
         self.defend = False
         self.run = False
         self.invalidResponse = False
+        self.test = "test" 
         # Three parallel arrays that holds the scenarios, choices, and responses for the game.
         self.scenarios = [
             "Scenario 1: 1choice1 or 2choice2",

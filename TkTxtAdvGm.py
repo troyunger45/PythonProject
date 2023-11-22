@@ -29,14 +29,24 @@ class Game:
             "Scenario 2: 2choice1 or 2choice2",
             "A monster attacks what will you do: fight or run",
             "Scenario 4: 4choice1 or 4choice2",
-            "Scenario 5: 5choice1 or 5choice2", 
+            "Scenario 5: 5choice1 or 5choice2",
+            "A cyborg attacks what will you do: fight or run",
+            "Scenario 7: 7choice1 or 7choice2",
+            "Scenario 8: 8choice1 or 8choice2",
+            "Scenario 9: 9choice1 or 9choice2",
+            "Scenario 10: 10choice1 or 10choice2",
         ]
-        self.scenarioResponse = [
+        self.scenarioResponse =[
             ["1response1", "1response2"],
             ["2response1", "2response2"],
-            ["You chose to fight!", "You Chose to run!"],
+            ["You chose to fight the monster!", "You Chose to run!"],
             ["4response1", "4response2"],
             ["5response1", "5response2"],
+            ["You chose to fight the cyborg!", "You Chose to run!"],
+            ["7response1", "7response2"],
+            ["8response1", "8response2"],
+            ["9response1", "9response2"],
+            ["10response1", "10response2"]
         ]
         self.scenarioChoice = [
             ["1choice1", "1choice2"],
@@ -44,6 +54,19 @@ class Game:
             ["fight", "run"],
             ["4choice1", "4choice2"],
             ["5choice1", "5choice2"],
+            ["fight", "run"],
+            ["7choice1", "7choice2"],
+            ["8choice1", "8choice2"],
+            ["9choice1", "9choice2"],
+            ["10choice1", "10choice2"]
+        ]
+        self.enemyName = [
+            "Monster",
+            "Cyborg"
+        ]
+        self.enemiesHealth = [
+            50,
+            100
         ]
         self.scenarioCount = 0
         # Calls InsertMenuWidgets
@@ -51,7 +74,7 @@ class Game:
     
     def ResetHealth(self):
         if self.health <= 0:
-            self.health = 50
+            self.health = 75
             self.enemyHealth = 25
     
     # Sets screen for the menu to be displayed.
@@ -122,7 +145,9 @@ class Game:
                 self.text_box.insert(END, response_text + "\n")
                 # Determines when the player will need to fight. Fight option will always be in column 0.
                 if self.scenarioCount == 2 and user_input == self.scenarioChoice[2][0]: # We fight on the third turn index:(r:2 c:0).
-                    self.Fight(user_input)   
+                    self.Fight(user_input)  
+                elif self.scenarioCount == 5 and user_input == self.scenarioChoice[5][0]:
+                    self.Fight(user_input)
             elif user_input == self.scenarioChoice[self.scenarioCount][1]:    # Choice two.
                 response_text = self.scenarioResponse[self.scenarioCount][1]
                 self.text_box.insert(END, response_text + "\n") 
@@ -150,8 +175,15 @@ class Game:
         fight_dialog.title("Fight Scenario")
         fight_dialog.geometry('500x275')
         custom_font1 = ("Helvetica", 10, "bold")
-        self.health = 50
-        self.enemyHealth = 25
+        self.health = 75
+        monster = False
+        cyborg = False
+        if self.scenarioCount == 2:
+            self.enemyHealth = self.enemiesHealth[0]
+            monster = True
+        elif self.scenarioCount == 5:
+            self.enemyHealth = self.enemiesHealth[1]
+            cyborg = True
         my_canvas = Canvas(fight_dialog, width=500, height=250)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(0, 0, image=self.bg4, anchor='nw')
@@ -176,9 +208,15 @@ class Game:
             # Update the fight box with current health information
             self.fight_box.delete(1.0, END)
             if self.healthCount == 1:
-                self.fight_box.insert(END, "The monster charges! What will you do? attack, defend, or run." + "\n")
+                if monster == True:
+                    self.fight_box.insert(END, f"The {self.enemyName[0]} charges! What will you do? attack, defend, or run." + "\n")
+                elif cyborg == True:
+                    self.fight_box.insert(END, f"The {self.enemyName[1]} charges! What will you do? attack, defend, or run." + "\n")
             if self.attack == True:
-                self.fight_box.insert(END,"You attacked the monster! You stabbed it, but you were knocked back.\n" )
+                if monster == True:
+                    self.fight_box.insert(END,f"You attacked the {self.enemyName[0]}! You stabbed it, but you were knocked back.\n" )
+                elif cyborg == True:
+                    self.fight_box.insert(END,f"You attacked the {self.enemyName[1]}! You stabbed it, but you were knocked back.\n" )
             elif self.defend == True:
                 self.fight_box.insert(END,"You held your stance giving you health\n" )
             elif self.run == True:
@@ -186,7 +224,10 @@ class Game:
                 break
             elif self.invalidResponse == True:
                 self.fight_box.insert(END, f"You chose '{fight_input.get()}'. This is not a valid response. Please chose again.\n")
-            self.fight_box.insert(END, f"Monster's health: {self.enemyHealth}.\n")
+            if monster == True:
+                self.fight_box.insert(END, f"{self.enemyName[0]}'s health: {self.enemyHealth}.\n")
+            elif cyborg == True:
+                self.fight_box.insert(END, f"{self.enemyName[1]}'s health: {self.enemyHealth}.\n")
             self.fight_box.insert(END, f"Your health: {self.health}.\n")
             fight_dialog.update()
             # Wait for a short time to avoid a tight loop
@@ -222,6 +263,7 @@ class Game:
                 self.attack = False
                 self.run = False
                 self.invalidResponse = False
+                self.healthCount += 1
             elif fight_input == "run":
                 self.invalidResponse = False
                 self.run = True

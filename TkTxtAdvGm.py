@@ -13,19 +13,21 @@ class Game:
         self.bg3 = PhotoImage(file="images/picture4.png")
         self.bg4 = PhotoImage(file="images/picture5.png")
         # Defines class attributes.
-        self.health = 100
+        self.health = 75
         self.xp = 0
         self.name = ""
-        self.enemyHealth = 25
+        self.enemyHealth = 50
         self.healthCount=1
         self.attack = False
         self.defend = False
         self.run = False
         self.invalidResponse = False
-        self.test = "test" 
+        self.previousDefend = False
+        self.printDefendTwice = False
+        self.scenarioCount = 0
         # Three parallel arrays that holds the scenarios, choices, and responses for the game.
         self.scenarios = [
-            "Scenario 1: 1choice1 or 2choice2",
+            "Scenario 1: 1choice1 or 1choice2",
             "Scenario 2: 2choice1 or 2choice2",
             "A monster attacks what will you do: fight or run",
             "Scenario 4: 4choice1 or 4choice2",
@@ -68,14 +70,13 @@ class Game:
             50,
             100
         ]
-        self.scenarioCount = 0
         # Calls InsertMenuWidgets
         self.InsertMenuWidgets()
     
     def ResetHealth(self):
         if self.health <= 0:
             self.health = 75
-            self.enemyHealth = 25
+            self.enemyHealth = 50
     
     # Sets screen for the menu to be displayed.
     def InsertMenuWidgets(self):
@@ -152,7 +153,7 @@ class Game:
                 response_text = self.scenarioResponse[self.scenarioCount][1]
                 self.text_box.insert(END, response_text + "\n") 
             else:   # invalid Option.
-                response_text = f"You chose '{user_input}'. This is not a valid response. Please chose again."
+                response_text = f"You chose '{user_input}'. This is not a valid response. Please choose again."
                 self.text_box.insert(END, response_text + "\n") 
                 self.scenarioCount = self.scenarioCount - 1
             # Increment scenarioCount.
@@ -195,7 +196,7 @@ class Game:
         fight_input = Entry(fight_dialog, font=custom_font1, width=50, bg="cyan", fg="navy")
         fight_input_window = my_canvas.create_window(70, 40, anchor='nw', window=fight_input)
         # Button to process the user input and close the window.
-        process_button = Button(fight_dialog, text="Process", command=lambda: self.ProcessFight(fight_dialog, fight_input.get()), padx=25, pady=10, fg="cyan", bg="navy", font=custom_font1)
+        process_button = Button(fight_dialog, text="Process", command=lambda: self.ProcessFight(fight_input.get(),monster,cyborg), padx=25, pady=10, fg="cyan", bg="navy", font=custom_font1)
         process_button_window = my_canvas.create_window(195, 200, anchor='nw', window=process_button)
 
         self.healthCount = 1
@@ -203,27 +204,33 @@ class Game:
         self.defend = False
         self.run = False
         self.invalidResponse = False
+        self.previousDefend = False
+        self.printDefendTwice = False
         # Continuously check player's health during the fight
         while self.health > 0 and self.enemyHealth > 0:
             # Update the fight box with current health information
             self.fight_box.delete(1.0, END)
-            if self.healthCount == 1:
+            if self.invalidResponse == True:
+                self.fight_box.insert(END, f"You chose '{fight_input.get()}'. This is not a valid response. Please chose again.\n")
+            elif self.healthCount == 1:
                 if monster == True:
                     self.fight_box.insert(END, f"The {self.enemyName[0]} charges! What will you do? attack, defend, or run." + "\n")
                 elif cyborg == True:
                     self.fight_box.insert(END, f"The {self.enemyName[1]} charges! What will you do? attack, defend, or run." + "\n")
-            if self.attack == True:
+            elif self.attack == True: 
                 if monster == True:
                     self.fight_box.insert(END,f"You attacked the {self.enemyName[0]}! You stabbed it, but you were knocked back.\n" )
                 elif cyborg == True:
                     self.fight_box.insert(END,f"You attacked the {self.enemyName[1]}! You stabbed it, but you were knocked back.\n" )
             elif self.defend == True:
-                self.fight_box.insert(END,"You held your stance giving you health\n" )
+                if self.printDefendTwice == False:
+                    self.fight_box.insert(END, "You held your stance, giving you health.\n")
+                    self.previousDefend = True  # Update the flag after a successful defend
+                else:
+                    self.fight_box.insert(END, "You must attack before you may defend!\n")  
             elif self.run == True:
                 self.fight_box.insert(END,"You ran away with you life!\n" )
                 break
-            elif self.invalidResponse == True:
-                self.fight_box.insert(END, f"You chose '{fight_input.get()}'. This is not a valid response. Please chose again.\n")
             if monster == True:
                 self.fight_box.insert(END, f"{self.enemyName[0]}'s health: {self.enemyHealth}.\n")
             elif cyborg == True:
@@ -246,20 +253,30 @@ class Game:
         if self.run == True:
             fight_dialog.after(3000, lambda: fight_dialog.destroy())
     
-    def ProcessFight(self, fight_dialog, fight_input):
+    def ProcessFight(self, fight_input, monster,cyborg):
         self.fight_box.delete(1.0, END)
-        if self.health >= 1 and self.enemyHealth >= 1 :
+    
+        if self.health >= 1 and self.enemyHealth >= 1:
             if fight_input == "attack":
-                self.enemyHealth -= 10
+                if monster:
+                    self.enemyHealth -= 10
+                elif cyborg:
+                    self.enemyHealth -= 20
                 self.health -= 5
                 self.attack = True
                 self.defend = False
                 self.run = False
                 self.invalidResponse = False
+                self.previousDefend = False
                 self.healthCount += 1
             elif fight_input == "defend":
-                self.health -= 10
                 self.defend = True
+                if self.previousDefend == False:
+                    self.health += 10
+                    self.previousDefend = True
+                    self.printDefendTwice = False
+                else:
+                    self.printDefendTwice = True
                 self.attack = False
                 self.run = False
                 self.invalidResponse = False
@@ -269,11 +286,10 @@ class Game:
                 self.run = True
                 self.attack = False
                 self.defend = False
-            else:
-                self.invalidResponse = True
-                self.run = False
-                self.attack = False
-                self.defend = False
+        
+            # Update the display
+            self.menu.update_idletasks()
+                
     # Sets screen for the description to be displayed.
     def InsertDescriptionWidgets(self):
         # Clear the menu window if it's not empty.

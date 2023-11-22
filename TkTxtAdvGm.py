@@ -77,6 +77,15 @@ class Game:
         if self.health <= 0:
             self.health = 75
             self.enemyHealth = 50
+
+    def SetDamage(self, enemy1, enemy2):
+        random_number = random.random()
+        if enemy1:
+            self.enemyDamage = random.randint(13,19)
+            self. playerDamage = random.randint(15,21)
+        elif enemy2:
+            self.enemyDamage = random.randint(21,27)
+            self. playerDamage = random.randint(21,27)
     
     # Sets screen for the menu to be displayed.
     def InsertMenuWidgets(self):
@@ -246,7 +255,7 @@ class Game:
             fight_dialog.update()  # Update the fight box
             fight_dialog.after(3000, lambda: fight_dialog.destroy())
             self.menu.after(3000, lambda: self.InsertMenuWidgets())
-        elif self.enemyHealth <= 0:
+        if self.enemyHealth <= 0:
             self.fight_box.insert(END, "You killed the enemy!\n")
             fight_dialog.update()  # Update the fight box
             fight_dialog.after(3000, lambda: fight_dialog.destroy())
@@ -258,11 +267,13 @@ class Game:
     
         if self.health >= 1 and self.enemyHealth >= 1:
             if fight_input == "attack":
+                self.SetDamage(monster,cyborg)
                 if monster:
-                    self.enemyHealth -= 10
+                    self.enemyHealth -= self.enemyDamage
+                    self.health -= self.playerDamage
                 elif cyborg:
-                    self.enemyHealth -= 20
-                self.health -= 5
+                    self.enemyHealth -= self.enemyDamage
+                    self.health -= self.playerDamage
                 self.attack = True
                 self.defend = False
                 self.run = False

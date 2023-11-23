@@ -237,7 +237,7 @@ class Game:
         while self.health > 0 and self.enemyHealth > 0:
             if self.closeFight == False:
                 # Update the fight box with current health information
-                self.fight_box.delete("1.0", END)
+                self.fight_box.delete(1.0, END)
                 if self.invalidResponse == True:
                     self.fight_box.insert(END, f"You chose '{fight_input.get()}'. This is not a valid response. Please chose again.\n")
                 elif self.healthCount == 1:
@@ -321,6 +321,11 @@ class Game:
             elif fight_input == "run":
                 self.invalidResponse = False
                 self.run = True
+                self.attack = False
+                self.defend = False
+            else:
+                self.invalidResponse = True
+                self.run = False
                 self.attack = False
                 self.defend = False
             # Update the display

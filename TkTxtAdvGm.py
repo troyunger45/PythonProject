@@ -159,7 +159,7 @@ class Game:
         self.user_input = Entry(self.menu, font=custom_font1, width=50, bg="cyan", fg="navy")
         user_input_window = my_canvas.create_window(80, 90, anchor='nw', window=self.user_input)
         # Creating and placing button to process user input.
-        self.response_button = Button(self.menu, text="Display response.", padx=31, pady=25, fg="cyan", bg="navy", font=custom_font1, command=lambda: self.ProcessUserInput(self.user_input.get()))
+        self.response_button = Button(self.menu, text="Display response.", padx=31, pady=25, fg="cyan", bg="navy", font=custom_font1, command=lambda: self.ProcessUserInput(self.user_input.get().lower()))
         response_button_window = my_canvas.create_window(170, 270, anchor='nw', window=self.response_button)
 
     # Process user input and display a response
@@ -219,12 +219,15 @@ class Game:
         if self.scenarioCount == 2:
             self.enemyHealth = self.enemiesHealth[0]
             enemy1 = True
+            enemy_num = 0
         elif self.scenarioCount == 5:
             self.enemyHealth = self.enemiesHealth[1]
             enemy2 = True
+            enemy_num = 1
         elif self.scenarioCount == 8:
             self.enemyHealth = self.enemiesHealth[2]
             enemy3 = True
+            enemy_num = 2
         my_canvas = Canvas(fight_dialog, width=500, height=250)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(0, 0, image=self.bg4, anchor='nw')
@@ -233,10 +236,10 @@ class Game:
         fight_box_window = my_canvas.create_window(70, 80, anchor='nw', window=self.fight_box)
         
         # Creating and placing the entry for user input to the screen.
-        fight_input = Entry(fight_dialog, font=custom_font1, width=50, bg="cyan", fg="navy")
-        fight_input_window = my_canvas.create_window(70, 40, anchor='nw', window=fight_input)
+        self.fight_input = Entry(fight_dialog, font=custom_font1, width=50, bg="cyan", fg="navy")
+        fight_input_window = my_canvas.create_window(70, 40, anchor='nw', window=self.fight_input)
         # Button to process the user input and close the window.
-        process_button = Button(fight_dialog, text="Process", command=lambda: self.ProcessFight(fight_input.get(),enemy1,enemy2,enemy3), padx=25, pady=10, fg="cyan", bg="navy", font=custom_font1)
+        process_button = Button(fight_dialog, text="Process", command=lambda: self.ProcessFight(self.fight_input.get().lower(),enemy1,enemy2,enemy3), padx=25, pady=10, fg="cyan", bg="navy", font=custom_font1)
         process_button_window = my_canvas.create_window(195, 200, anchor='nw', window=process_button)
 
         self.healthCount = 1
@@ -253,24 +256,24 @@ class Game:
                 # Update the fight box with current health information
                 self.fight_box.delete(1.0, END)
                 if self.invalidResponse == True:
-                    self.fight_box.insert(END, f"You chose '{fight_input.get()}'. This is not a valid response. Please choose again.\n")
+                    self.fight_box.insert(END, f"You chose '{self.fight_input.get()}'. This is not a valid response. Please choose again.\n")
                 elif self.run == True:
                     self.fight_box.insert(END,"You ran away with you life!\n" )
                     break
                 elif self.healthCount == 1:
                     if enemy1 == True:
-                        self.fight_box.insert(END, f"The {self.enemyName[0].lower()} charges! What will you do? attack, defend, or run.\nRemember you may only defend one time before you have to chose attack." + "\n")
+                        self.fight_box.insert(END, f"The {self.enemyName[enemy_num].lower()} charges! What will you do? attack, defend, or run.\nRemember you may only defend one time before you have to chose attack." + "\n")
                     elif enemy2 == True:
-                        self.fight_box.insert(END, f"The {self.enemyName[1].lower()} charges! What will you do? attack, defend, or run.\nRemember you may only defend one time before you have to chose attack." + "\n")
+                        self.fight_box.insert(END, f"The {self.enemyName[enemy_num].lower()} charges! What will you do? attack, defend, or run.\nRemember you may only defend one time before you have to chose attack." + "\n")
                     elif enemy3 == True:
-                        self.fight_box.insert(END, f"The {self.enemyName[2].lower()} charges! What will you do? attack, defend, or run.\nRemember you may only defend one time before you have to chose attack." + "\n")
+                        self.fight_box.insert(END, f"The {self.enemyName[enemy_num].lower()} charges! What will you do? attack, defend, or run.\nRemember you may only defend one time before you have to chose attack." + "\n")
                 elif self.attack == True: 
                     if enemy1 == True:
-                        self.fight_box.insert(END,f"You attacked! Dealing {self.enemyDamage} damage to the {self.enemyName[0].lower()}, but you were hit causing {self.playerDamage} damage to you.\n" )
+                        self.fight_box.insert(END,f"You attacked! Dealing {self.enemyDamage} damage to the {self.enemyName[enemy_num].lower()}, but you were hit causing {self.playerDamage} damage to you.\n" )
                     elif enemy2 == True:
-                        self.fight_box.insert(END,f"You attacked! Dealing {self.enemyDamage} damage to the {self.enemyName[1].lower()}, but you were hit causing {self.playerDamage} damage to you.\n" )
+                        self.fight_box.insert(END,f"You attacked! Dealing {self.enemyDamage} damage to the {self.enemyName[enemy_num].lower()}, but you were hit causing {self.playerDamage} damage to you.\n" )
                     elif enemy3 == True:
-                        self.fight_box.insert(END,f"You attacked! Dealing {self.enemyDamage} damage to the {self.enemyName[2].lower()}, but you were hit causing {self.playerDamage} damage to you.\n" )
+                        self.fight_box.insert(END,f"You attacked! Dealing {self.enemyDamage} damage to the {self.enemyName[enemy_num].lower()}, but you were hit causing {self.playerDamage} damage to you.\n" )
                 elif self.defend == True:
                     if self.printDefendTwice == False:
                         self.fight_box.insert(END, f"You held your stance, giving you {self.defense} health.\n")
@@ -278,11 +281,11 @@ class Game:
                     else:
                         self.fight_box.insert(END, "You must attack before you may defend!\n")  
                 if enemy1 == True:
-                    self.fight_box.insert(END, f"{self.enemyName[0]}'s health: {self.enemyHealth}.\n")
+                    self.fight_box.insert(END, f"{self.enemyName[enemy_num]}'s health: {self.enemyHealth}.\n")
                 elif enemy2 == True:
-                    self.fight_box.insert(END, f"{self.enemyName[1]}'s health: {self.enemyHealth}.\n")
+                    self.fight_box.insert(END, f"{self.enemyName[enemy_num]}'s health: {self.enemyHealth}.\n")
                 elif enemy3 == True:
-                    self.fight_box.insert(END, f"{self.enemyName[2]}'s health: {self.enemyHealth}.\n")
+                    self.fight_box.insert(END, f"{self.enemyName[enemy_num]}'s health: {self.enemyHealth}.\n")
                 if self.health >= 0:
                     self.fight_box.insert(END, f"Your health: {self.health}.\n")
                 fight_dialog.update()
@@ -299,7 +302,7 @@ class Game:
             fight_dialog.after(3000, lambda: fight_dialog.destroy())
             self.menu.after(3000, lambda: self.InsertMenuWidgets())
         if self.enemyHealth <= 0:
-            self.fight_box.insert(END, "You killed the enemy!\n")
+            self.fight_box.insert(END, f"You killed the {self.enemyName[enemy_num].lower()}!\n")
             self.fight_box.insert(END, f"Your health: {self.health}.\n")
             fight_dialog.update()  # Update the fight box
             fight_dialog.after(3000, lambda: fight_dialog.destroy())
@@ -309,6 +312,7 @@ class Game:
     
     def ProcessFight(self, fight_input, enemy1,enemy2,enemy3):
         self.fight_box.delete(1.0, END)
+        self.fight_input.delete(0, END)
         if self.health >= 1 and self.enemyHealth >= 1:
             if fight_input == "attack":
                 self.SetDamage(enemy1,enemy2,enemy3)

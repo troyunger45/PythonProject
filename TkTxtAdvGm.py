@@ -25,15 +25,16 @@ class Game:
         self.previousDefend = False
         self.printDefendTwice = False
         self.scenarioCount = 0
+        self.defense = 0
         # Three parallel arrays that holds the scenarios, choices, and responses for the game.
         self.scenarios = [
             "Scenario 1: 1choice1 or 1choice2",
             "Scenario 2: 2choice1 or 2choice2",
             "A monster attacks what will you do: fight or run",
-            "Scenario 4: 4choice1 or 4choice2",
+            "You found a shield: pick up or leave",
             "Scenario 5: 5choice1 or 5choice2",
             "A cyborg attacks what will you do: fight or run",
-            "Scenario 7: 7choice1 or 7choice2",
+            "You found a sword: pick up or leave",
             "Scenario 8: 8choice1 or 8choice2",
             "A centurion-bot attacks what will you do: fight or run",
             "Scenario 10: 10choice1 or 10choice2",
@@ -42,10 +43,10 @@ class Game:
             ["1response1", "1response2"],
             ["2response1", "2response2"],
             ["You chose to fight the monster!", "You chose to run!"],
-            ["4response1", "4response2"],
+            ["You pick up the shield, increasing the healing you do when defending.", "you left the shield."],
             ["5response1", "5response2"],
             ["You chose to fight the cyborg!", "You chose to run!"],
-            ["7response1", "7response2"],
+            ["You pick up the sword, increasing the damage you do to enemies.", "you left the sword."],
             ["8response1", "8response2"],
             ["You chose to fight the centurion-bot!", "You chose to run!"],
             ["10response1", "10response2"]
@@ -54,10 +55,10 @@ class Game:
             ["1choice1", "1choice2"],
             ["2choice1", "2choice2"],
             ["fight", "run"],
-            ["4choice1", "4choice2"],
+            ["pick up", "leave"],
             ["5choice1", "5choice2"],
             ["fight", "run"],
-            ["7choice1", "7choice2"],
+            ["pick up", "leave"],
             ["8choice1", "8choice2"],
             ["fight", "run"],
             ["10choice1", "10choice2"]
@@ -90,6 +91,9 @@ class Game:
         elif enemy3:
             self.enemyDamage = random.randint(26,32)
             self. playerDamage = random.randint(31,37)
+        # Apply the swords damage bonus if the player has picked up the sword.
+        if self.item2:
+            self.enemyDamage += random.randint(1,3)
     
     def SetDefense(self, enemy1, enemy2, enemy3):
         if enemy1:
@@ -98,10 +102,12 @@ class Game:
             self.defense = random.randint(15,20)
         elif enemy3:
             self.defense = random.randint(25,30)
+        # Apply the shield's defense bonus if the player has picked up the shield.
+        if self.item1:
+            self.defense += random.randint(1,3)
 
-    
     def on_fight_window_close(self, fight_dialog):
-        # Handle any necessary cleanup or actions when the fight window is closed
+        # Handle any necessary cleanup or actions when the fight window is closed.
         self.response_button.config(state=NORMAL)
         self.closeFight = True
         self.text_box.insert(END, "You closed the fight window.\n")
@@ -140,6 +146,8 @@ class Game:
         custom_font2 = ("Helvetica", 15, "bold")
         self.ResetHealth()
         self.scenarioCount = 0
+        self.item1 = False
+        self.item2 = False
         my_canvas = Canvas(self.menu, width=500, height=500)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(0, 0, image=self.bg3, anchor='nw')
@@ -174,13 +182,13 @@ class Game:
             if user_input == self.scenarioChoice[self.scenarioCount][0]:    # Choice one.
                 response_text = self.scenarioResponse[self.scenarioCount][0]
                 self.text_box.insert(END, response_text + "\n")
-                # Determines when the player will need to fight. Fight option will always be in column 0.
-                if self.scenarioCount == 2 and user_input == self.scenarioChoice[2][0]: # We fight on the third turn index:(r:2 c:0).
-                    self.Fight()    
-                elif self.scenarioCount == 5 and user_input == self.scenarioChoice[5][0]:
-                    self.Fight()
-                elif self.scenarioCount == 8 and user_input == self.scenarioChoice[8][0]:
-                    self.Fight()
+                # Determines when the player will need to fight or they picked up an Item. Fight and Item pick up option will always be in column 0.
+                if (self.scenarioCount == 2 and user_input == self.scenarioChoice[2][0]) or (self.scenarioCount == 5 and user_input == self.scenarioChoice[5][0]) or (self.scenarioCount == 8 and user_input == self.scenarioChoice[8][0]): 
+                    self.Fight() 
+                elif self.scenarioCount == 3 and user_input == self.scenarioChoice[3][0]:
+                    self.item1 = True 
+                elif self.scenarioCount == 6 and user_input == self.scenarioChoice[6][0]:
+                    self.item2 = True
             elif user_input == self.scenarioChoice[self.scenarioCount][1]:    # Choice two.
                 response_text = self.scenarioResponse[self.scenarioCount][1]
                 self.text_box.insert(END, response_text + "\n") 
@@ -258,8 +266,11 @@ class Game:
                 if self.invalidResponse == True:
                     self.fight_box.insert(END, f"You chose '{self.fight_input.get()}'. This is not a valid response. Please choose again.\n")
                 elif self.run == True:
-                    self.fight_box.insert(END,"You ran away with you life!\n" )
-                    break
+                    if enemy3:
+                        self.fight_box.insert(END,"You cannot run from this fight! Defend or attack!\n" )
+                    else:
+                        self.fight_box.insert(END,"You ran away with you life!\n" )
+                        break
                 elif self.healthCount == 1:
                     if enemy1 == True:
                         self.fight_box.insert(END, f"The {self.enemyName[enemy_num].lower()} charges! What will you do? attack, defend, or run.\nRemember you may only defend one time before you have to chose attack." + "\n")
@@ -299,15 +310,15 @@ class Game:
         if self.health <= 0:
             self.fight_box.insert(END, "You died!\n")
             fight_dialog.update()  # Update the fight box
-            fight_dialog.after(3000, lambda: fight_dialog.destroy())
-            self.menu.after(3000, lambda: self.InsertMenuWidgets())
+            fight_dialog.after(1000, lambda: fight_dialog.destroy())
+            self.menu.after(1000, lambda: self.InsertMenuWidgets())
         if self.enemyHealth <= 0:
             self.fight_box.insert(END, f"You killed the {self.enemyName[enemy_num].lower()}!\n")
             self.fight_box.insert(END, f"Your health: {self.health}.\n")
             fight_dialog.update()  # Update the fight box
-            fight_dialog.after(3000, lambda: fight_dialog.destroy())
+            fight_dialog.after(1000, lambda: fight_dialog.destroy())
         if self.run == True:
-            fight_dialog.after(3000, lambda: fight_dialog.destroy())
+            fight_dialog.after(1000, lambda: fight_dialog.destroy())
         self.response_button.config(state=NORMAL)
     
     def ProcessFight(self, fight_input, enemy1,enemy2,enemy3):
@@ -349,7 +360,7 @@ class Game:
                 self.defend = False
             # Update the display
             self.menu.update_idletasks()
-                
+                 
     # Sets screen for the description to be displayed.
     def InsertDescriptionWidgets(self):
         # Clear the menu window if it's not empty.

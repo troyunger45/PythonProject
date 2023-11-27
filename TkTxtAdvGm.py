@@ -7,17 +7,15 @@ class Game:
         self.menu = menu
         self.title = menu.title("")
         menu.geometry('890x500')
-        # Create the PhotoImage here.
+        # Creating the PhotoImages.
         self.bg = PhotoImage(file="images/picture2.png")
         self.bg2 = PhotoImage(file="images/picture3.png")
         self.bg3 = PhotoImage(file="images/picture4.png")
         self.bg4 = PhotoImage(file="images/picture5.png")
         # Defines class attributes.
         self.health = 75
-        self.xp = 0
-        self.name = ""
         self.enemyHealth = 50
-        self.healthCount=1
+        self.healthCount= 1
         self.attack = False
         self.defend = False
         self.run = False
@@ -26,42 +24,9 @@ class Game:
         self.printDefendTwice = False
         self.scenarioCount = 0
         self.defense = 0
-        # Three parallel arrays that holds the scenarios, choices, and responses for the game.
-        self.scenarios = [
-            "Scenario 1: 1choice1 or 1choice2",
-            "Scenario 2: 2choice1 or 2choice2",
-            "A monster attacks what will you do: fight or run",
-            "You found a shield: pick up or leave",
-            "Scenario 5: 5choice1 or 5choice2",
-            "A cyborg attacks what will you do: fight or run",
-            "You found a sword: pick up or leave",
-            "Scenario 8: 8choice1 or 8choice2",
-            "A centurion-bot attacks what will you do: fight or run",
-            "Scenario 10: 10choice1 or 10choice2",
-        ]
-        self.scenarioResponse =[
-            ["1response1", "1response2"],
-            ["2response1", "2response2"],
-            ["You chose to fight the monster!", "You chose to run!"],
-            ["You pick up the shield, increasing the healing you do when defending.", "you left the shield."],
-            ["5response1", "5response2"],
-            ["You chose to fight the cyborg!", "You chose to run!"],
-            ["You pick up the sword, increasing the damage you do to enemies.", "you left the sword."],
-            ["8response1", "8response2"],
-            ["You chose to fight the centurion-bot!", "You chose to run!"],
-            ["10response1", "10response2"]
-        ]
-        self.scenarioChoice = [
-            ["1choice1", "1choice2"],
-            ["2choice1", "2choice2"],
-            ["fight", "run"],
-            ["pick up", "leave"],
-            ["5choice1", "5choice2"],
-            ["fight", "run"],
-            ["pick up", "leave"],
-            ["8choice1", "8choice2"],
-            ["fight", "run"],
-            ["10choice1", "10choice2"]
+        self.itemValue = [
+            3,
+            3
         ]
         self.enemyName = [
             "Monster",
@@ -73,15 +38,55 @@ class Game:
             100,
             150
         ]
+        # Three parallel arrays that holds the scenarios, choices, and responses for the game.
+        self.scenarios = [
+            "Scenario 1: 1choice1 or 1choice2",
+            "Scenario 2: 2choice1 or 2choice2",
+            "A monster attacks what will you do: fight or run",
+            "You found a shield: pick up or leave",
+            "A path emerges!: right or left",
+            "A cyborg attacks what will you do: fight or run",
+            "You found a sword: pick up or leave",
+            "Scenario 8: 8choice1 or 8choice2",
+            "A centurion-bot attacks what will you do: fight or run",
+            "Scenario 10: 10choice1 or 10choice2",
+        ]
+        self.scenarioResponse =[
+            ["1response1", "1response2"],
+            ["2response1", "2response2"],
+            ["You chose to fight the monster!", "You chose to run!"],
+            [f"You pick up the shield, increasing the healing you do when defending by {self.itemValue[0]}.", "you left the shield."],
+            ["You found a shortcut!", "You fell into a trap! Lowering your defense by 1."],
+            ["You chose to fight the cyborg!", "You chose to run!"],
+            [f"You pick up the sword, increasing the damage you do to enemies by {self.itemValue[1]}.", "you left the sword."],
+            ["8response1", "8response2"],
+            ["You chose to fight the centurion-bot!", "You chose to run!"],
+            ["10response1", "10response2"]
+        ]
+        self.scenarioChoice = [
+            ["1choice1", "1choice2"],
+            ["2choice1", "2choice2"],
+            ["fight", "run"],
+            ["pick up", "leave"],
+            ["right", "left"],
+            ["fight", "run"],
+            ["pick up", "leave"],
+            ["8choice1", "8choice2"],
+            ["fight", "run"],
+            ["10choice1", "10choice2"]
+        ]
         # Calls InsertMenuWidgets
         self.InsertMenuWidgets()
     
+    # Resets the charater and enemy health back to the start of the game if they have died.
     def ResetHealth(self):
         if self.health <= 0:
             self.health = 75
             self.enemyHealth = 50
 
+    # Manages player and enemy damage for each point int the game.
     def SetDamage(self, enemy1, enemy2, enemy3):
+        # Selects base player and enemy damaged based on the enemy type.
         if enemy1:
             self.enemyDamage = random.randint(13,19)
             self. playerDamage = random.randint(15,21)
@@ -93,9 +98,10 @@ class Game:
             self. playerDamage = random.randint(31,37)
         # Apply the swords damage bonus if the player has picked up the sword.
         if self.item2:
-            self.enemyDamage += random.randint(1,3)
+            self.enemyDamage += self.itemValue[1]
     
     def SetDefense(self, enemy1, enemy2, enemy3):
+        # Selects base defense based on the enemy type.
         if enemy1:
             self.defense = random.randint(10,15)
         elif enemy2:
@@ -104,9 +110,13 @@ class Game:
             self.defense = random.randint(25,30)
         # Apply the shield's defense bonus if the player has picked up the shield.
         if self.item1:
-            self.defense += random.randint(1,3)
+            self.defense += self.itemValue[0]
+        # Apply the trap defense decrease if the player runs into the trap.
+        if self.lowerDefense:
+            self.defense = self.defense - self.trapDamage
 
-    def on_fight_window_close(self, fight_dialog):
+    # Handles what happens when the fight window is exited by user.
+    def OnFightWindowClose(self, fight_dialog):
         # Handle any necessary cleanup or actions when the fight window is closed.
         self.response_button.config(state=NORMAL)
         self.closeFight = True
@@ -119,7 +129,6 @@ class Game:
         for widget in self.menu.winfo_children():
             widget.destroy()
         self.scenarioCount = 0
-        
         # Setting the format of the window along with creating the canvas with the background image.
         self.title = self.menu.title("Text Adventure Game!")
         custom_fontLabel = ("Helvetica", 25, "bold")
@@ -140,14 +149,17 @@ class Game:
         # Clear the menu window if it's not empty.
         for widget in self.menu.winfo_children():
             widget.destroy()
-        # Setting the format of the window along with creating the canvas with the background image.
+        # Setting the format of the window.
         self.title = self.menu.title("Playing The Game!")
         custom_font1 = ("Helvetica", 10, "bold")
         custom_font2 = ("Helvetica", 15, "bold")
+        # Reseting Flags for begining of the game.
         self.ResetHealth()
         self.scenarioCount = 0
         self.item1 = False
         self.item2 = False
+        self.lowerDefense = False
+        # Creating the canvas with the background image.
         my_canvas = Canvas(self.menu, width=500, height=500)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(0, 0, image=self.bg3, anchor='nw')
@@ -160,7 +172,7 @@ class Game:
         self.text_box = Text(self.menu, width=50, height=7, wrap=WORD, font=custom_font1, bg="cyan", fg="navy")
         text_box_window = my_canvas.create_window(80, 130, anchor='nw', window=self.text_box)
         #Insert first scenario to the text box.
-        self.text_box.insert(END, self.scenarios[0] )
+        self.text_box.insert(END, self.scenarios[0])
         # Disable text box.
         self.text_box.config(state=DISABLED)
         # Creating and placing the entry for user input to the screen.
@@ -186,12 +198,16 @@ class Game:
                 if (self.scenarioCount == 2 and user_input == self.scenarioChoice[2][0]) or (self.scenarioCount == 5 and user_input == self.scenarioChoice[5][0]) or (self.scenarioCount == 8 and user_input == self.scenarioChoice[8][0]): 
                     self.Fight() 
                 elif self.scenarioCount == 3 and user_input == self.scenarioChoice[3][0]:
-                    self.item1 = True 
+                    self.item1 = True                   
                 elif self.scenarioCount == 6 and user_input == self.scenarioChoice[6][0]:
                     self.item2 = True
             elif user_input == self.scenarioChoice[self.scenarioCount][1]:    # Choice two.
                 response_text = self.scenarioResponse[self.scenarioCount][1]
-                self.text_box.insert(END, response_text + "\n") 
+                self.text_box.insert(END, response_text + "\n")
+                #Trap scenario to decrease defense
+                if self.scenarioCount == 4 and user_input == self.scenarioChoice[4][1]:
+                    self.lowerDefense = True
+                    self.trapDamage = 1
             else:   # invalid Option.
                 response_text = f"You chose '{user_input}'. This is not a valid response. Please choose again."
                 self.text_box.insert(END, response_text + "\n") 
@@ -217,7 +233,7 @@ class Game:
         fight_dialog.title("Fight Scenario")
         fight_dialog.geometry('500x275')
         # Bind the closing of the window to a function
-        fight_dialog.protocol("WM_DELETE_WINDOW", lambda: self.on_fight_window_close(fight_dialog))
+        fight_dialog.protocol("WM_DELETE_WINDOW", lambda: self.OnFightWindowClose(fight_dialog))
         custom_font1 = ("Helvetica", 10, "bold")
         self.health = 75
         enemy1 = False
@@ -242,14 +258,12 @@ class Game:
         # Creating and placing the text box to the screen.
         self.fight_box = Text(fight_dialog, width=50, height=7, wrap=WORD, font=custom_font1, bg="cyan", fg="navy")
         fight_box_window = my_canvas.create_window(70, 80, anchor='nw', window=self.fight_box)
-        
         # Creating and placing the entry for user input to the screen.
         self.fight_input = Entry(fight_dialog, font=custom_font1, width=50, bg="cyan", fg="navy")
         fight_input_window = my_canvas.create_window(70, 40, anchor='nw', window=self.fight_input)
         # Button to process the user input and close the window.
         process_button = Button(fight_dialog, text="Process", command=lambda: self.ProcessFight(self.fight_input.get().lower(),enemy1,enemy2,enemy3), padx=25, pady=10, fg="cyan", bg="navy", font=custom_font1)
         process_button_window = my_canvas.create_window(195, 200, anchor='nw', window=process_button)
-
         self.healthCount = 1
         self.attack = False
         self.defend = False
@@ -304,56 +318,70 @@ class Game:
                 fight_dialog.after(100)
             else:
                 self.scenarioCount= self.scenarioCount - 1
-                break
-                
+                break     
         # Player's health is 0 or below, handle the death
         if self.health <= 0:
             self.fight_box.insert(END, "You died!\n")
             fight_dialog.update()  # Update the fight box
-            fight_dialog.after(1000, lambda: fight_dialog.destroy())
-            self.menu.after(1000, lambda: self.InsertMenuWidgets())
+            fight_dialog.after(1500, lambda: fight_dialog.destroy())
+            self.menu.after(1500, lambda: self.InsertMenuWidgets())
         if self.enemyHealth <= 0:
             self.fight_box.insert(END, f"You killed the {self.enemyName[enemy_num].lower()}!\n")
             self.fight_box.insert(END, f"Your health: {self.health}.\n")
             fight_dialog.update()  # Update the fight box
-            fight_dialog.after(1000, lambda: fight_dialog.destroy())
+            fight_dialog.after(1500, lambda: fight_dialog.destroy())
         if self.run == True:
-            fight_dialog.after(1000, lambda: fight_dialog.destroy())
+            fight_dialog.after(1500, lambda: fight_dialog.destroy())
         self.response_button.config(state=NORMAL)
     
+    # Processes the user's input in the fight scenario with boolean flags for the while loop.
     def ProcessFight(self, fight_input, enemy1,enemy2,enemy3):
         self.fight_box.delete(1.0, END)
         self.fight_input.delete(0, END)
+        # Only Executes if the player is alive.
         if self.health >= 1 and self.enemyHealth >= 1:
+            # When the user selects 'attack' for the fight.
             if fight_input == "attack":
+                # Sets proper player and enemy damage.
                 self.SetDamage(enemy1,enemy2,enemy3)
                 self.enemyHealth -= self.enemyDamage
-                self.health -= self.playerDamage        
+                self.health -= self.playerDamage 
+                # Flags proper boolean values.        
                 self.attack = True
                 self.defend = False
                 self.run = False
                 self.invalidResponse = False
                 self.previousDefend = False
+                # Increase health count to know we are no longer on our first turn.
                 self.healthCount += 1
+            # When the user selects 'defend' for the fight.    
             elif fight_input == "defend":
-                self.defend = True
+                # Sets proper defense value.
                 self.SetDefense(enemy1,enemy2,enemy3)
+                # Decides if the player has selected defend once before.
                 if self.previousDefend == False:
-                    self.health += self.defense
+                    self.health += self.defense     # Health is only increased if the previous input was not defend.
                     self.previousDefend = True
                     self.printDefendTwice = False
                 else:
                     self.printDefendTwice = True
+                # Flags proper boolean values. 
+                self.defend = True
                 self.attack = False
                 self.run = False
                 self.invalidResponse = False
+                # Increase health count to know we are no longer on our first turn.
                 self.healthCount += 1
+            # When the user selects 'run' for the fight.
             elif fight_input == "run":
+                # Flags proper boolean values. 
                 self.invalidResponse = False
                 self.run = True
                 self.attack = False
                 self.defend = False
+            # When user selects an invalid response for the fight.
             else:
+                # Flags proper boolean values. 
                 self.invalidResponse = True
                 self.run = False
                 self.attack = False
@@ -383,7 +411,7 @@ class Game:
 def main():
     # Creates the menu window.
     menu = Tk()
-    # Creates Game object to run the first instance of the game.
+    # Creates Game object to run the first object of the game.
     game_one = Game(menu)
     # Calling the main loop for the GUI to run.
     menu.mainloop()

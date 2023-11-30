@@ -29,9 +29,9 @@ class Game:
             3
         ]
         self.enemyName = [
-            "Monster",
-            "Cyborg",
-            "Centurion-bot"
+            "Hyperion guard",
+            "Hyperion elite trooper",
+            "The President's giant mech"
         ]
         self.enemiesHealth = [
             50,
@@ -40,40 +40,43 @@ class Game:
         ]
         # Three parallel arrays that holds the scenarios, choices, and responses for the game.
         self.scenarios = [
-            "Scenario 1: 1choice1 or 1choice2",
-            "Scenario 2: 2choice1 or 2choice2",
-            "A monster attacks what will you do: fight or run",
-            "You found a shield: pick up or leave",
-            "A path emerges!: right or left",
-            "A cyborg attacks what will you do: fight or run",
-            "You found a sword: pick up or leave",
-            "Scenario 8: 8choice1 or 8choice2",
-            "A centurion-bot attacks what will you do: fight or run",
-            "Scenario 10: 10choice1 or 10choice2",
+            "You are an AI engineer who is tasked with monitoring the AI that is now ruling over earth. The AI's leadership has been benevolent, wise and caring, until now. Something has been corrupting the AI, and you have been trying to stop it. One night, you find out what it is. A  mega-corporation, known as Hyperion Macro, has been tampering with the AI government, trying to bend it to their will and control the world. That same night, you are nearly killed by a rogue assassin, but you get away at the last second. In your haste, you snag two crucial items: your laser pistol, and something in your safe. Do you grab a 'first-aid kit' (+2 healing) or a 'light plate carrier' from your policing days (+2 defense)?",
+            "After trekking through the dry, dusty fields of Galactican Plains, you find a farm and a Hyperion supply depot. Out of desperation, you try to find a spot to rest. However, a Hyperion guard sees you and tries to subdue you. Do you 'fight', or try to 'escape'?",
+            "You come back to the supply depot later, rummaging for supplies. While scavenging, you find a holo-note next to some guards that shows a hidden underground bullet train that leads directly to Hyperion's headquarters. That explains why they'd have a supply depot out here in the middle of nowhere. You pocket the note and now begin searching for the entrance to this train. Do you look around 'quickly' or 'carefully'?",
+            "You find the entrance to this advanced train station, but before you enter, something catches your eye from a nearby dumpster. Going to investigate it, you find two items. You can only grab one, though, as you hear the bullet train begin to take off. Do you grab an old 'adaptive armor set' (+3 defense) or a 'plasma rifle' (+3 damage)?",
+            "Once on the train, you breathe a sigh of relief. A Hyperion elite trooper on the train has spotted you, however, and grabs his communicator. You quickly decide if you should engage the enemy or simply try to hide. Do you 'fight', or try to 'escape'?",
+            "Emerging from the bullet train, you find you've finally made it to Hyperion HQ. The large, sleek walls rise up seemingly forever into the sky. The building itself intimidates you. What horrible things could be going on inside that would lead to world domination? Would you like to 'keep moving' or 'take a moment' to collect yourself? ",
+            "You make it outside Hyperion HQ, and see two options before you. You could stroll through Hyperion's front entrance with a platoon of soldiers you see marching in, or you could duck off to the side and enter through a construction site. Do you enter through the 'front' or the 'side'?",
+            "Rummaging through the storage room, you find some top-of-the-line gear. Would you like to grab the 'cryogenic stim shot' (+5 healing) or the 'prototype railgun' (+5 damage)?",
+            "You find an old service elevator and scan the buttons inside. One button is simply labeled, “Access Point.” Fair enough. You push the button and descend deep underground. Once the doors open, you see a room filled with servers, monitors, and flashing lights. To the side, you see a room with some state-of-the-art equipment. You kick open the glass door, shattering it. Walking through the broken glass, you ready your weapon, only to stop and stare at the technological monstrosity towering above you. Hyperion's president controls a mech staring you down. You know it's him, you've seen his face before. Without a word, he readies his weapon. Do you try to 'negotiate' with him or 'distract' him?",
+            "The president's giant mech looms before you, spinning up its gatling laser. You know you're in the right place, but you have to move quickly. The mech begins to unload lasers on the place you stood mere moments ago. Will you stand and 'fight' or will you try to 'escape'?",
+            "Having successfully defeated the President in his Hyperion mech, a voice crackles over an intercom in the room. It's the board of directors, and they see how much you care about the world. They offer you a position of power in Hyperion, to become its new leader. You do know what's best for the world, after all. Do you accept 'yes' or 'no'?"
         ]
         self.scenarioResponse =[
-            ["1response1", "1response2"],
-            ["2response1", "2response2"],
-            ["You chose to fight the monster!", "You chose to run!"],
-            [f"You pick up the shield, increasing the healing you do when defending by {self.itemValue[0]}.", "you left the shield."],
-            ["You found a shortcut!", "You fell into a trap! Lowering your defense by 1."],
-            ["You chose to fight the cyborg!", "You chose to run!"],
-            [f"You pick up the sword, increasing the damage you do to enemies by {self.itemValue[1]}.", "you left the sword."],
-            ["8response1", "8response2"],
-            ["You chose to fight the centurion-bot!", "You chose to run!"],
-            ["10response1", "10response2"]
+            ["You grab your first aid kit and escape. Now with one mission, you find your way to Hyperion's headquarters.", "You grab your plate carrier and escape. Now with one mission, you find your way to Hyperion's headquarters."],
+            ["You give the guard an elbow to the jaw as he grabs you, initiating combat.", "You break away and sprint for the exit, successfully escaping."],
+            ["You decide to look quickly, scanning the area for any obvious signs or entrances to the hidden underground bullet train. Time is of the essence, and you hope that a fast search will reveal the entrance without drawing too much attention to yourself.", "Opting for a careful approach, you take your time to meticulously inspect the surroundings. You pay attention to details, looking for subtle clues or hidden mechanisms that might indicate the entrance to the underground bullet train. While this method is slower, you believe it reduces the risk of overlooking important details that could lead you astray."],
+            ["You quickly grab the adaptive armor set and run to the futuristic train, slipping the suit on as you go. You feel more powerful as you duck into the train's closing doors.", "You quickly grab the plasma rifle and run to the futuristic train, turning off the safety as you go. You feel more powerful as you duck into the train's closing doors."],
+            ["You rip the communicator out of the guard's hand and begin combat.", "You sprint into a cargo storage area and escape onto the train's roof. However, trying to stay on the train at these incredible speeds saps your strength substantially"],
+            ["You snap yourself out of your thoughts. The here and now is what matters. You proceed onward.", "Overwhelmed by the sheer magnitude of Hyperion HQ, you decide to take a moment to collect yourself. You lean against a nearby wall, taking deep breaths to calm your nerves. As you gather your thoughts, you can't help but wonder about the mysteries hidden within those imposing walls. After a brief pause, you contemplate your next move."],
+            ["You enter through the front with the platoon of soldiers. You blend in surprisingly well, even though your armor is a bit dirtier and outdated. After marching with them for a minute, you see a storage room and slink away to see what you can find", "You sneak into the construction site undetected. However, just as you find an entrance into Hyperion, a worker alerts his superiors to your presence. You jump in through the opening in the wall but have to sprint away from any potential items you may have been able to pick up."],
+            ["You grab the cryo stim, admiring the technology needed to produce such incredible medicine. After putting it in your backpack, you head out, looking for a way down to Hyperion's server room.", "You grab the railgun. It's heavy, but it packs a SERIOUS punch. You look at all the wires and exposed parts, but it seems safe enough. You pick it up and head out, looking for a way down to Hyperion's server room."],
+            ["You decide to attempt negotiation, raising your hands in a gesture of peace. 'We don't have to do this,' you say, trying to appeal to reason. You inquire about Hyperion's motives and whether there's room for a resolution without further bloodshed. However, the president remains stoic, refusing to engage in dialogue. With a cold glare, he readies his weapon, signaling that words won't stop the imminent confrontation.", "In a quick change of strategy, you decide to distract the president and buy yourself some time. You scan the room for any nearby control panels or exposed wiring. Spotting a console, you dash towards it, initiating a series of random commands to confuse the mech's systems. As alarms blare and lights flash, you hope the chaos will create an opening for your next move."],
+            ["You ready your weapon and begin to fire back, initiating combat for the final time.", "You've come so far, you will not run away now."],
+            ["Hyperion's board of directors calms you down and tells you that you would make an incredible leader. The former president didn't have the resolve to do a fraction of what you can. You know what's best for the world, you've already shown them. Hyperion is offering you a place of power, where your efforts can be fully recognized. You deserve more. You can make a difference. And after a long pause, you accept.", "You ignore the intercom and take one final shot with your weapon, obliterating the server that kept Hyperion in control of the AI. The calm messages quickly turn into frantic yells as alarms begin blaring throughout the entire building. You manage to escape the HQ though, by a worker who had also been fed up with Hyperion. You and the worker escape into the world, with a beautiful sunset adorning the sky. You're sure Hyperion will find you eventually, but they can never take away your achievements. You've beaten them, forever."]
         ]
         self.scenarioChoice = [
-            ["1choice1", "1choice2"],
-            ["2choice1", "2choice2"],
-            ["fight", "run"],
-            ["pick up", "leave"],
-            ["right", "left"],
-            ["fight", "run"],
-            ["pick up", "leave"],
-            ["8choice1", "8choice2"],
-            ["fight", "run"],
-            ["10choice1", "10choice2"]
+            ["first-aid kit", "light plate carrier"],       # Intro/Item1:      0
+            ["fight", "escape"],                            # Enemy1:           1
+            ["quickly", "carefully"],                       # Story2:           2
+            ["adaptive armor set", "plasma rifle"],         # Item2:            3
+            ["fight", "escape"],                            # Enemy2:           4
+            ["keep moving", "take a moment"],               # Story3:           5
+            ["front", "side"],                              # Shortcut/Trap:    6
+            ["cryogenic stim shot", "prototype railgun"],   # Item3:            7
+            ["negotiate", "distract"],                      # Story4:           8
+            ["fight", "escape"],                            # Enemy3            9
+            ["yes", "no"]                                   # Conclusion:       10
         ]
         # Calls InsertMenuWidgets
         self.InsertMenuWidgets()
@@ -195,7 +198,7 @@ class Game:
                 response_text = self.scenarioResponse[self.scenarioCount][0]
                 self.text_box.insert(END, response_text + "\n")
                 # Determines when the player will need to fight or they picked up an Item. Fight and Item pick up option will always be in column 0.
-                if (self.scenarioCount == 2 and user_input == self.scenarioChoice[2][0]) or (self.scenarioCount == 5 and user_input == self.scenarioChoice[5][0]) or (self.scenarioCount == 8 and user_input == self.scenarioChoice[8][0]): 
+                if (self.scenarioCount == 1 and user_input == self.scenarioChoice[1][0]) or (self.scenarioCount == 4 and user_input == self.scenarioChoice[4][0]) or (self.scenarioCount == 9 and user_input == self.scenarioChoice[9][0]): 
                     self.Fight() 
                 elif self.scenarioCount == 3 and user_input == self.scenarioChoice[3][0]:
                     self.item1 = True                   
@@ -219,7 +222,7 @@ class Game:
                 if self.scenarioCount < len(self.scenarios):
                     self.text_box.insert(END, self.scenarios[self.scenarioCount])
                 else:
-                    self.text_box.insert(END, "This is the conclusion of the game!")
+                    self.text_box.insert(END, "The End!")
         elif self.scenarioCount >= len(self.scenarios) and self.health > 0:
             self.text_box.insert(END, "All done! Please press exit game to restart!")
         if self.health > 0:
@@ -240,15 +243,15 @@ class Game:
         enemy2 = False
         enemy3 = False
         self.response_button.config(state=DISABLED)
-        if self.scenarioCount == 2:
+        if self.scenarioCount == 1:
             self.enemyHealth = self.enemiesHealth[0]
             enemy1 = True
             enemy_num = 0
-        elif self.scenarioCount == 5:
+        elif self.scenarioCount == 4:
             self.enemyHealth = self.enemiesHealth[1]
             enemy2 = True
             enemy_num = 1
-        elif self.scenarioCount == 8:
+        elif self.scenarioCount == 9:
             self.enemyHealth = self.enemiesHealth[2]
             enemy3 = True
             enemy_num = 2

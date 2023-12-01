@@ -7,6 +7,7 @@ class Game:
         self.menu = menu
         self.title = menu.title("")
         menu.geometry('890x500')
+        menu.resizable(False, False)
         # Defines class attributes.
         self.health = 75
         self.enemyHealth = 50
@@ -90,7 +91,7 @@ class Game:
         self.gamePath = "images/start.png"
         self.combatPath = "images/combat.png"
         self.descriptionPath = "images/description.png"
-        '''
+        
         if self.scenarioCount == 1 or self.scenarioCount == 2:
             self.gamePath = "images/combat1.png"
             self.bgGame = PhotoImage(file=self.gamePath)
@@ -113,8 +114,7 @@ class Game:
             self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
         else:
             self.bgGame = PhotoImage(file=self.gamePath)
-        '''
-        self.bgGame = PhotoImage(file=self.gamePath)   
+           
         self.bgMenu = PhotoImage(file=self.menuPath)
         self.bgDescription = PhotoImage(file=self.descriptionPath)
         self.bgCombat = PhotoImage(file=self.combatPath)
@@ -210,12 +210,12 @@ class Game:
         self.my_canvas.create_image(0, 0, image=self.bgGame, anchor='nw')
         # Creating and placing the back button to the screen.
         backButton = Button(self.menu, text="Exit game.", command=self.InsertMenuWidgets, padx=35, pady=12.5, fg="#7AF9F9", bg="#480653", font=custom_font1)
-        backButton_window = self.my_canvas.create_window(290, 390, anchor='nw', window=backButton)
+        backButton_window = self.my_canvas.create_window(287.5, 438.5, anchor='nw', window=backButton)
         # Creating text instructions for entering input.
         self.my_canvas.create_text(250, 70, text="Enter choice here:", font=custom_font2, fill="#02A5C8", anchor="center")
         # Creating and placing the text box to the screen.
-        self.text_box = Text(self.menu, width=50, height=15, wrap=WORD, font=custom_font1, bg="#7AF9F9", fg="#480653")
-        text_box_window = self.my_canvas.create_window(80, 130, anchor='nw', window=self.text_box)
+        self.text_box = Text(self.menu, width=50, height=19, wrap=WORD, font=custom_font1, bg="#7AF9F9", fg="#480653")
+        text_box_window = self.my_canvas.create_window(80, 120, anchor='nw', window=self.text_box)
         #Insert first scenario to the text box.
         self.text_box.insert(END, self.scenarios[0])
         # Disable text box.
@@ -225,7 +225,7 @@ class Game:
         user_input_window = self.my_canvas.create_window(80, 90, anchor='nw', window=self.user_input)
         # Creating and placing button to process user input.
         self.response_button = Button(self.menu, text="Display response.", padx=35, pady=12.5, fg="#7AF9F9", bg="#480653", font=custom_font1, command=lambda: self.ProcessUserInput(self.user_input.get().lower()))
-        response_button_window = self.my_canvas.create_window(80, 390, anchor='nw', window=self.response_button)
+        response_button_window = self.my_canvas.create_window(80, 438.5, anchor='nw', window=self.response_button)
 
     # Process user input and display a response
     def ProcessUserInput(self, user_input):
@@ -233,6 +233,8 @@ class Game:
         self.text_box.config(state=NORMAL)
         self.text_box.delete(1.0, END)
         self.user_input.delete(0, END)
+        notValid = False
+        fight = False
         # Logic to decide if the game cycle has been completed or not.
         if self.scenarioCount < len(self.scenarios):
             # Check if the user input matches either of the choices for the current scenario.
@@ -241,7 +243,8 @@ class Game:
                 self.text_box.insert(END, response_text + "\n")
                 # Determines when the player will need to fight or they picked up an Item. Fight and Item pick up option will always be in column 0.
                 if (self.scenarioCount == 1 and user_input == self.scenarioChoice[1][0]) or (self.scenarioCount == 4 and user_input == self.scenarioChoice[4][0]) or (self.scenarioCount == 9 and user_input == self.scenarioChoice[9][0]):
-                    self.Fight() 
+                    self.Fight()
+                    fight = True
                 elif self.scenarioCount == 0 and user_input == self.scenarioChoice[0][0]:
                     self.item1 = True                   
                 elif self.scenarioCount == 3 and user_input == self.scenarioChoice[3][0]:
@@ -266,11 +269,13 @@ class Game:
                 response_text = f"You chose '{user_input}'. This is not a valid response. Please choose again."
                 self.text_box.insert(END, response_text + "\n") 
                 self.scenarioCount = self.scenarioCount - 1
+                notValid = True
             # Increment scenarioCount.
             self.scenarioCount = self.scenarioCount + 1
-            '''
-            self.SetImages()
-            '''
+            if fight:
+                self.menu.after(1500, self.SetImages)
+            elif notValid == False:
+                self.SetImages()
             if self.health > 0:
                 # Determines wether to display the next scenario or the conclusion.
                 if self.scenarioCount < len(self.scenarios):
@@ -289,6 +294,7 @@ class Game:
         fight_dialog = Toplevel(self.menu)
         fight_dialog.title("Fight Scenario")
         fight_dialog.geometry('500x275')
+        fight_dialog.resizable(False, False)
         # Bind the closing of the window to a function
         fight_dialog.protocol("WM_DELETE_WINDOW", lambda: self.OnFightWindowClose(fight_dialog))
         custom_font1 = ("Helvetica", 10, "bold")

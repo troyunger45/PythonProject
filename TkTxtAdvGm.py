@@ -7,11 +7,6 @@ class Game:
         self.menu = menu
         self.title = menu.title("")
         menu.geometry('890x500')
-        # Creating the PhotoImages.
-        self.bg = PhotoImage(file="images/picture2.png")
-        self.bg2 = PhotoImage(file="images/picture3.png")
-        self.bg3 = PhotoImage(file="images/picture4.png")
-        self.bg4 = PhotoImage(file="images/picture5.png")
         # Defines class attributes.
         self.health = 75
         self.enemyHealth = 50
@@ -25,8 +20,9 @@ class Game:
         self.scenarioCount = 0
         self.defense = 0
         self.itemValue = [
-            3,
-            3
+            [2,2],
+            [3,3],
+            [5,5]  
         ]
         self.enemyName = [
             "Hyperion guard",
@@ -40,10 +36,10 @@ class Game:
         ]
         # Three parallel arrays that holds the scenarios, choices, and responses for the game.
         self.scenarios = [
-            "You are an AI engineer who is tasked with monitoring the AI that is now ruling over earth. The AI's leadership has been benevolent, wise and caring, until now. Something has been corrupting the AI, and you have been trying to stop it. One night, you find out what it is. A  mega-corporation, known as Hyperion Macro, has been tampering with the AI government, trying to bend it to their will and control the world. That same night, you are nearly killed by a rogue assassin, but you get away at the last second. In your haste, you snag two crucial items: your laser pistol, and something in your safe. Do you grab a 'first-aid kit' (+2 healing) or a 'light plate carrier' from your policing days (+2 defense)?",
+            "You are an AI engineer who is tasked with monitoring the AI that is now ruling over earth. The AI's leadership has been benevolent, wise and caring, until now. Something has been corrupting the AI, and you have been trying to stop it. One night, you find out what it is. A  mega-corporation, known as Hyperion Macro, has been tampering with the AI government, trying to bend it to their will and control the world. That same night, you are nearly killed by a rogue assassin, but you get away at the last second. In your haste, you snag two crucial items: your laser pistol, and something in your safe. Do you grab a 'first-aid kit' (+2 healing) or a 'light plate carrier' from your policing days (+2 armor)?",
             "After trekking through the dry, dusty fields of Galactican Plains, you find a farm and a Hyperion supply depot. Out of desperation, you try to find a spot to rest. However, a Hyperion guard sees you and tries to subdue you. Do you 'fight', or try to 'escape'?",
             "You come back to the supply depot later, rummaging for supplies. While scavenging, you find a holo-note next to some guards that shows a hidden underground bullet train that leads directly to Hyperion's headquarters. That explains why they'd have a supply depot out here in the middle of nowhere. You pocket the note and now begin searching for the entrance to this train. Do you look around 'quickly' or 'carefully'?",
-            "You find the entrance to this advanced train station, but before you enter, something catches your eye from a nearby dumpster. Going to investigate it, you find two items. You can only grab one, though, as you hear the bullet train begin to take off. Do you grab an old 'adaptive armor set' (+3 defense) or a 'plasma rifle' (+3 damage)?",
+            "You find the entrance to this advanced train station, but before you enter, something catches your eye from a nearby dumpster. Going to investigate it, you find two items. You can only grab one, though, as you hear the bullet train begin to take off. Do you grab an old 'adaptive armor set' (+3 armor) or a 'plasma rifle' (+3 damage)?",
             "Once on the train, you breathe a sigh of relief. A Hyperion elite trooper on the train has spotted you, however, and grabs his communicator. You quickly decide if you should engage the enemy or simply try to hide. Do you 'fight', or try to 'escape'?",
             "Emerging from the bullet train, you find you've finally made it to Hyperion HQ. The large, sleek walls rise up seemingly forever into the sky. The building itself intimidates you. What horrible things could be going on inside that would lead to world domination? Would you like to 'keep moving' or 'take a moment' to collect yourself? ",
             "You make it outside Hyperion HQ, and see two options before you. You could stroll through Hyperion's front entrance with a platoon of soldiers you see marching in, or you could duck off to the side and enter through a construction site. Do you enter through the 'front' or the 'side'?",
@@ -78,6 +74,7 @@ class Game:
             ["fight", "escape"],                            # Enemy3            9
             ["yes", "no"]                                   # Conclusion:       10
         ]
+        self.SetImages()
         # Calls InsertMenuWidgets
         self.InsertMenuWidgets()
     
@@ -87,21 +84,62 @@ class Game:
             self.health = 75
             self.enemyHealth = 50
 
+    def SetImages(self):
+        # Creating the PhotoImages.
+        self.menuPath = "images/menu.png"
+        self.gamePath = "images/start.png"
+        self.combatPath = "images/combat.png"
+        self.descriptionPath = "images/description.png"
+        '''
+        if self.scenarioCount == 1 or self.scenarioCount == 2:
+            self.gamePath = "images/combat1.png"
+            self.bgGame = PhotoImage(file=self.gamePath)
+            self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
+        elif self.scenarioCount == 3 or self.scenarioCount == 4:
+            self.gamePath = "images/description.png"
+            self.bgGame = PhotoImage(file=self.gamePath)
+            self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
+        elif self.scenarioCount == 5 or self.scenarioCount == 6 or self.scenarioCount == 7:
+            self.gamePath = "images/story3.png"
+            self.bgGame = PhotoImage(file=self.gamePath)
+            self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
+        elif self.scenarioCount == 8 or self.scenarioCount == 9 or self.scenarioCount == 10:
+            self.gamePath = "images/story4.png"
+            self.bgGame = PhotoImage(file=self.gamePath)
+            self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
+        elif self.scenarioCount > 0:
+            self.gamePath = "images/start.png"
+            self.bgGame = PhotoImage(file=self.gamePath)
+            self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
+        else:
+            self.bgGame = PhotoImage(file=self.gamePath)
+        '''
+        self.bgGame = PhotoImage(file=self.gamePath)   
+        self.bgMenu = PhotoImage(file=self.menuPath)
+        self.bgDescription = PhotoImage(file=self.descriptionPath)
+        self.bgCombat = PhotoImage(file=self.combatPath)
+
     # Manages player and enemy damage for each point int the game.
     def SetDamage(self, enemy1, enemy2, enemy3):
         # Selects base player and enemy damaged based on the enemy type.
         if enemy1:
             self.enemyDamage = random.randint(13,19)
-            self. playerDamage = random.randint(15,21)
+            self. playerDamage = random.randint(17,23)
         elif enemy2:
             self.enemyDamage = random.randint(21,27)
-            self. playerDamage = random.randint(21,27)
+            self. playerDamage = random.randint(23,29)
         elif enemy3:
             self.enemyDamage = random.randint(26,32)
-            self. playerDamage = random.randint(31,37)
-        # Apply the swords damage bonus if the player has picked up the sword.
+            self. playerDamage = random.randint(33,39)
+        # Apply item values.
         if self.item2:
-            self.enemyDamage += self.itemValue[1]
+            self.playerDamage -= self.itemValue[0][1]
+        if self.item3:
+            self.playerDamage -= self.itemValue[1][0]
+        if self.item4:
+            self.enemyDamage += self.itemValue[1][1]
+        if self.item6:
+            self.enemyDamage -= self.itemValue[2][1]
     
     def SetDefense(self, enemy1, enemy2, enemy3):
         # Selects base defense based on the enemy type.
@@ -111,12 +149,11 @@ class Game:
             self.defense = random.randint(15,20)
         elif enemy3:
             self.defense = random.randint(25,30)
-        # Apply the shield's defense bonus if the player has picked up the shield.
+        # Apply item values.
         if self.item1:
-            self.defense += self.itemValue[0]
-        # Apply the trap defense decrease if the player runs into the trap.
-        if self.lowerDefense:
-            self.defense = self.defense - self.trapDamage
+            self.defense += self.itemValue[0][0]
+        if self.item5:
+            self.defense += self.itemValue[2][0]
 
     # Handles what happens when the fight window is exited by user.
     def OnFightWindowClose(self, fight_dialog):
@@ -133,17 +170,17 @@ class Game:
             widget.destroy()
         self.scenarioCount = 0
         # Setting the format of the window along with creating the canvas with the background image.
-        self.title = self.menu.title("Text Adventure Game!")
+        self.title = self.menu.title("Menu.")
         custom_fontLabel = ("Helvetica", 25, "bold")
         custom_fontButton = ("Helvetica", 10, "bold")
         my_canvas = Canvas(self.menu, width=500, height=500)
         my_canvas.pack(fill="both", expand=True)
-        my_canvas.create_image(0, 0, image=self.bg, anchor='nw')
+        self.image_item = my_canvas.create_image(0, 0, image=self.bgMenu, anchor='nw')
         # Creating and placing the menu title text to screen.
-        my_canvas.create_text(250, 100, text="Welcome to Our\nText Adventure Game!", font=custom_fontLabel, fill="cyan", anchor="center")
+        my_canvas.create_text(250, 100, text="Welcome to Our\nText Adventure Game!", font=custom_fontLabel, fill="#02A5C8", anchor="center")
         # Creating and placing the start and the description buttons to the screen.
-        startButton = Button(self.menu, text="Start Game!", command=self.InsertGameWidgets, padx=53, pady=25, bg="navy", fg="cyan", font=custom_fontButton)
-        descriptionButton = Button(self.menu, text="Game Description.", command=self.InsertDescriptionWidgets, padx=32, pady=25, bg="navy", fg="cyan", font=custom_fontButton)
+        startButton = Button(self.menu, text="Start Game!", command=self.InsertGameWidgets, padx=53, pady=25, bg="#480653", fg="#7AF9F9", font=custom_fontButton)
+        descriptionButton = Button(self.menu, text="Game Description.", command=self.InsertDescriptionWidgets, padx=32, pady=25, bg="#480653", fg="#7AF9F9", font=custom_fontButton)
         startButton_window = my_canvas.create_window(160, 250, anchor='nw', window=startButton)
         descriptionButton_window = my_canvas.create_window(160, 350, anchor='nw', window=descriptionButton)
 
@@ -159,31 +196,36 @@ class Game:
         # Reseting Flags for begining of the game.
         self.ResetHealth()
         self.scenarioCount = 0
+        self.SetImages()
         self.item1 = False
         self.item2 = False
-        self.lowerDefense = False
+        self.item3 = False
+        self.item4 = False
+        self.item5 = False
+        self.item6 = False
         # Creating the canvas with the background image.
-        my_canvas = Canvas(self.menu, width=500, height=500)
-        my_canvas.pack(fill="both", expand=True)
-        my_canvas.create_image(0, 0, image=self.bg3, anchor='nw')
+        self.my_canvas = Canvas(self.menu, width=500, height=500)
+        self.my_canvas.pack(fill="both", expand=True)
+        self.gamePath = "images/start.png"
+        self.my_canvas.create_image(0, 0, image=self.bgGame, anchor='nw')
         # Creating and placing the back button to the screen.
-        backButton = Button(self.menu, text="Exit game.", command=self.InsertMenuWidgets, padx=51.5, pady=25, fg="cyan", bg="navy", font=custom_font1)
-        backButton_window = my_canvas.create_window(170, 370, anchor='nw', window=backButton)
+        backButton = Button(self.menu, text="Exit game.", command=self.InsertMenuWidgets, padx=35, pady=12.5, fg="#7AF9F9", bg="#480653", font=custom_font1)
+        backButton_window = self.my_canvas.create_window(290, 390, anchor='nw', window=backButton)
         # Creating text instructions for entering input.
-        my_canvas.create_text(250, 70, text="Enter choice here:", font=custom_font2, fill="navy", anchor="center")
+        self.my_canvas.create_text(250, 70, text="Enter choice here:", font=custom_font2, fill="#02A5C8", anchor="center")
         # Creating and placing the text box to the screen.
-        self.text_box = Text(self.menu, width=50, height=7, wrap=WORD, font=custom_font1, bg="cyan", fg="navy")
-        text_box_window = my_canvas.create_window(80, 130, anchor='nw', window=self.text_box)
+        self.text_box = Text(self.menu, width=50, height=15, wrap=WORD, font=custom_font1, bg="#7AF9F9", fg="#480653")
+        text_box_window = self.my_canvas.create_window(80, 130, anchor='nw', window=self.text_box)
         #Insert first scenario to the text box.
         self.text_box.insert(END, self.scenarios[0])
         # Disable text box.
         self.text_box.config(state=DISABLED)
         # Creating and placing the entry for user input to the screen.
-        self.user_input = Entry(self.menu, font=custom_font1, width=50, bg="cyan", fg="navy")
-        user_input_window = my_canvas.create_window(80, 90, anchor='nw', window=self.user_input)
+        self.user_input = Entry(self.menu, font=custom_font1, width=50, bg="#7AF9F9", fg="#480653")
+        user_input_window = self.my_canvas.create_window(80, 90, anchor='nw', window=self.user_input)
         # Creating and placing button to process user input.
-        self.response_button = Button(self.menu, text="Display response.", padx=31, pady=25, fg="cyan", bg="navy", font=custom_font1, command=lambda: self.ProcessUserInput(self.user_input.get().lower()))
-        response_button_window = my_canvas.create_window(170, 270, anchor='nw', window=self.response_button)
+        self.response_button = Button(self.menu, text="Display response.", padx=35, pady=12.5, fg="#7AF9F9", bg="#480653", font=custom_font1, command=lambda: self.ProcessUserInput(self.user_input.get().lower()))
+        response_button_window = self.my_canvas.create_window(80, 390, anchor='nw', window=self.response_button)
 
     # Process user input and display a response
     def ProcessUserInput(self, user_input):
@@ -198,25 +240,37 @@ class Game:
                 response_text = self.scenarioResponse[self.scenarioCount][0]
                 self.text_box.insert(END, response_text + "\n")
                 # Determines when the player will need to fight or they picked up an Item. Fight and Item pick up option will always be in column 0.
-                if (self.scenarioCount == 1 and user_input == self.scenarioChoice[1][0]) or (self.scenarioCount == 4 and user_input == self.scenarioChoice[4][0]) or (self.scenarioCount == 9 and user_input == self.scenarioChoice[9][0]): 
+                if (self.scenarioCount == 1 and user_input == self.scenarioChoice[1][0]) or (self.scenarioCount == 4 and user_input == self.scenarioChoice[4][0]) or (self.scenarioCount == 9 and user_input == self.scenarioChoice[9][0]):
                     self.Fight() 
-                elif self.scenarioCount == 3 and user_input == self.scenarioChoice[3][0]:
+                elif self.scenarioCount == 0 and user_input == self.scenarioChoice[0][0]:
                     self.item1 = True                   
-                elif self.scenarioCount == 6 and user_input == self.scenarioChoice[6][0]:
-                    self.item2 = True
+                elif self.scenarioCount == 3 and user_input == self.scenarioChoice[3][0]:
+                    self.item3 = True
+                elif self.scenarioCount == 7 and user_input == self.scenarioChoice[7][0]:
+                    self.item5 = True
             elif user_input == self.scenarioChoice[self.scenarioCount][1]:    # Choice two.
                 response_text = self.scenarioResponse[self.scenarioCount][1]
                 self.text_box.insert(END, response_text + "\n")
-                #Trap scenario to decrease defense
-                if self.scenarioCount == 4 and user_input == self.scenarioChoice[4][1]:
-                    self.lowerDefense = True
-                    self.trapDamage = 1
+                #Trap scenario to skip items 5 and 6.
+                if self.scenarioCount == 6 and user_input == self.scenarioChoice[6][1]:
+                    self.scenarioCount = self.scenarioCount + 1
+                elif self.scenarioCount == 0 and user_input == self.scenarioChoice[0][1]:
+                    self.item2 = True
+                elif self.scenarioCount == 3 and user_input == self.scenarioChoice[3][1]:
+                    self.item4 = True
+                elif self.scenarioCount == 7 and user_input == self.scenarioChoice[7][1]:
+                    self.item6 = True
+                elif self.scenarioCount == 9 and user_input == self.scenarioChoice[9][1]:
+                    self.scenarioCount = self.scenarioCount - 1
             else:   # invalid Option.
                 response_text = f"You chose '{user_input}'. This is not a valid response. Please choose again."
                 self.text_box.insert(END, response_text + "\n") 
                 self.scenarioCount = self.scenarioCount - 1
             # Increment scenarioCount.
             self.scenarioCount = self.scenarioCount + 1
+            '''
+            self.SetImages()
+            '''
             if self.health > 0:
                 # Determines wether to display the next scenario or the conclusion.
                 if self.scenarioCount < len(self.scenarios):
@@ -257,15 +311,15 @@ class Game:
             enemy_num = 2
         my_canvas = Canvas(fight_dialog, width=500, height=250)
         my_canvas.pack(fill="both", expand=True)
-        my_canvas.create_image(0, 0, image=self.bg4, anchor='nw')
+        my_canvas.create_image(0, 0, image=self.bgCombat, anchor='nw')
         # Creating and placing the text box to the screen.
-        self.fight_box = Text(fight_dialog, width=50, height=7, wrap=WORD, font=custom_font1, bg="cyan", fg="navy")
+        self.fight_box = Text(fight_dialog, width=50, height=7, wrap=WORD, font=custom_font1, bg="#7AF9F9", fg="#480653")
         fight_box_window = my_canvas.create_window(70, 80, anchor='nw', window=self.fight_box)
         # Creating and placing the entry for user input to the screen.
-        self.fight_input = Entry(fight_dialog, font=custom_font1, width=50, bg="cyan", fg="navy")
+        self.fight_input = Entry(fight_dialog, font=custom_font1, width=50, bg="#7AF9F9", fg="#480653")
         fight_input_window = my_canvas.create_window(70, 40, anchor='nw', window=self.fight_input)
         # Button to process the user input and close the window.
-        process_button = Button(fight_dialog, text="Process", command=lambda: self.ProcessFight(self.fight_input.get().lower(),enemy1,enemy2,enemy3), padx=25, pady=10, fg="cyan", bg="navy", font=custom_font1)
+        process_button = Button(fight_dialog, text="Process", command=lambda: self.ProcessFight(self.fight_input.get().lower(),enemy1,enemy2,enemy3), padx=25, pady=10, fg="#7AF9F9", bg="#480653", font=custom_font1)
         process_button_window = my_canvas.create_window(195, 200, anchor='nw', window=process_button)
         self.healthCount = 1
         self.attack = False
@@ -403,11 +457,11 @@ class Game:
         custom_fontButton = ("Helvetica", 10, "bold")
         my_canvas = Canvas(self.menu, width=500, height=500)
         my_canvas.pack(fill="both", expand=True)
-        my_canvas.create_image(0, 0, image=self.bg2, anchor='nw')
+        my_canvas.create_image(0, 0, image=self.bgDescription, anchor='nw')
         # Creating and placing the description text to screen.
-        my_canvas.create_text(250, 100, text="This is an old style text adventure game! Currently\nupon starting the game you are given a scenario in\nwhich you are given two options to choose from.", font=custom_fontLabel, fill="navy", anchor="center")
+        my_canvas.create_text(250, 100, text="This is an old style text adventure game! Currently\nupon starting the game you are given a scenario in\nwhich you are given two options to choose from.", font=custom_fontLabel, fill="#02A5C8", anchor="center")
         # Creating and placing the back button to the screen.
-        backButton = Button(self.menu, text="Back to menu.", command=self.InsertMenuWidgets, padx=32, pady=25, fg="cyan", bg="navy", font=custom_fontButton)
+        backButton = Button(self.menu, text="Back to menu.", command=self.InsertMenuWidgets, padx=32, pady=25, fg="#7AF9F9", bg="#480653", font=custom_fontButton)
         backButton_window = my_canvas.create_window(170, 250, anchor='nw', window=backButton)
 
 # Main function.

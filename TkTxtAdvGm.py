@@ -109,7 +109,7 @@ class Game:
             self.bgGame = PhotoImage(file=self.gamePath)
             self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
         elif self.scenarioCount > 0:
-            self.gamePath = "images/start.png"
+            self.gamePath = "images/conclusion.png"
             self.bgGame = PhotoImage(file=self.gamePath)
             self.my_canvas.itemconfig(self.image_item, image=self.bgGame)
         else:
@@ -177,7 +177,7 @@ class Game:
         my_canvas.pack(fill="both", expand=True)
         self.image_item = my_canvas.create_image(0, 0, image=self.bgMenu, anchor='nw')
         # Creating and placing the menu title text to screen.
-        my_canvas.create_text(250, 100, text="Welcome to Our\nText Adventure Game!", font=custom_fontLabel, fill="#02A5C8", anchor="center")
+        my_canvas.create_text(340, 100, text="Welcome to Code Revolt:\nHyperion's Fall!", font=custom_fontLabel, fill="#017189", anchor="center")
         # Creating and placing the start and the description buttons to the screen.
         startButton = Button(self.menu, text="Start Game!", command=self.InsertGameWidgets, padx=53, pady=25, bg="#480653", fg="#7AF9F9", font=custom_fontButton)
         descriptionButton = Button(self.menu, text="Game Description.", command=self.InsertDescriptionWidgets, padx=32, pady=25, bg="#480653", fg="#7AF9F9", font=custom_fontButton)
@@ -210,22 +210,22 @@ class Game:
         self.my_canvas.create_image(0, 0, image=self.bgGame, anchor='nw')
         # Creating and placing the back button to the screen.
         backButton = Button(self.menu, text="Exit game.", command=self.InsertMenuWidgets, padx=35, pady=12.5, fg="#7AF9F9", bg="#480653", font=custom_font1)
-        backButton_window = self.my_canvas.create_window(287.5, 438.5, anchor='nw', window=backButton)
+        backButton_window = self.my_canvas.create_window(287.5, 418.5, anchor='nw', window=backButton)
         # Creating text instructions for entering input.
-        self.my_canvas.create_text(250, 70, text="Enter choice here:", font=custom_font2, fill="#02A5C8", anchor="center")
+        self.my_canvas.create_text(250, 50, text="Enter choice here:", font=custom_font2, fill="#02A5C8", anchor="center")
         # Creating and placing the text box to the screen.
         self.text_box = Text(self.menu, width=50, height=19, wrap=WORD, font=custom_font1, bg="#7AF9F9", fg="#480653")
-        text_box_window = self.my_canvas.create_window(80, 120, anchor='nw', window=self.text_box)
+        text_box_window = self.my_canvas.create_window(80, 100, anchor='nw', window=self.text_box)
         #Insert first scenario to the text box.
         self.text_box.insert(END, self.scenarios[0])
         # Disable text box.
         self.text_box.config(state=DISABLED)
         # Creating and placing the entry for user input to the screen.
         self.user_input = Entry(self.menu, font=custom_font1, width=50, bg="#7AF9F9", fg="#480653")
-        user_input_window = self.my_canvas.create_window(80, 90, anchor='nw', window=self.user_input)
+        user_input_window = self.my_canvas.create_window(80, 70, anchor='nw', window=self.user_input)
         # Creating and placing button to process user input.
         self.response_button = Button(self.menu, text="Display response.", padx=35, pady=12.5, fg="#7AF9F9", bg="#480653", font=custom_font1, command=lambda: self.ProcessUserInput(self.user_input.get().lower()))
-        response_button_window = self.my_canvas.create_window(80, 438.5, anchor='nw', window=self.response_button)
+        response_button_window = self.my_canvas.create_window(80, 418.5, anchor='nw', window=self.response_button)
 
     # Process user input and display a response
     def ProcessUserInput(self, user_input):
@@ -459,16 +459,26 @@ class Game:
             widget.destroy()
         # Setting the format of the window along with creating the canvas with the background image.
         self.title = self.menu.title("Describing The Game!")
-        custom_fontLabel = ("Helvetica", 15, "bold")
+        custom_fontLabel = ("Helvetica", 12, "bold")
         custom_fontButton = ("Helvetica", 10, "bold")
-        my_canvas = Canvas(self.menu, width=500, height=500)
+        my_canvas = Canvas(self.menu, width=800, height=500)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(0, 0, image=self.bgDescription, anchor='nw')
         # Creating and placing the description text to screen.
-        my_canvas.create_text(250, 100, text="This is an old style text adventure game! Currently\nupon starting the game you are given a scenario in\nwhich you are given two options to choose from.", font=custom_fontLabel, fill="#02A5C8", anchor="center")
+        my_canvas.create_text(250, 50, text="Welcome to our Description Page!", font=custom_fontLabel, fill="#02A5C8", anchor="center")
+        my_canvas.create_text(250, 100, text="This is an old style text adventure game! Currently\nupon starting the game you are given a scenario in\nwhich you are given two options to choose from.\nAllowing you to shape your destiny.", font=custom_fontButton, fill="#7AF9F9", anchor="center")
+        my_canvas.create_text(243, 175, text="After completing a scenario you will move\non to the next one until your journey is complete.\nThere are story, item, and fight scenarios that\noffer a variety of different options to the user.", font=custom_fontButton, fill="#7AF9F9", anchor="center")
+        my_canvas.create_text(240, 225, text="Choices for the user to interact.", font=custom_fontLabel, fill="#02A5C8", anchor="center")
+        my_canvas.create_text(260, 290, text="Within the divergent types of scenarios, each will\ngive you a type of choice that is different from\neach other. Story scenarios give the player a moral\nchoice. Item scenarios give the user a choice in the\ncreation of their fight stats. Fight scenarios will provide\nthe user the ability to fight or escape from an enemy.", font=custom_fontButton, fill="#7AF9F9", anchor="center")
+        my_canvas.create_text(635, 50, text="How combat works.", font=custom_fontLabel, fill="#02A5C8", anchor="center")
+        my_canvas.create_text(650, 138, text="When a fight scenario occurs the user is given a\nchoice to fight or escape. If the user chooses fight,\nwe begin combat! While in combat, the user is given\nthree choices: attack, defend, or run. Attacking allows\nyou to do damage to the enemy, but the enemy also\ndoes damage to you. Defending allows the player the\nabilty to heal, but you can only do it once before\nneeding to attack again. Running allows the user to\nescape the enemy after selecting to fight.", font=custom_fontButton, fill="#7AF9F9", anchor="center")
+        my_canvas.create_text(635, 225, text="Alternate Conclusions!", font=custom_fontLabel, fill="#02A5C8", anchor="center")
+        my_canvas.create_text(650, 263, text="Based on what choices are selected, you can have\none of two different conclusions. This game forces you\nmake tough calls that can impact your future!", font=custom_fontButton, fill="#7AF9F9", anchor="center")
+        my_canvas.create_text(635, 305, text="Credits and mentions:", font=custom_fontLabel, fill="#02A5C8", anchor="center")
+        my_canvas.create_text(535, 360, text="* Troy Unger\n* Matt Sickles\n* Gavin Barnard\n* Manuel Gardea\n* Adian Chapman", font=custom_fontButton, fill="#7AF9F9", anchor="center")
         # Creating and placing the back button to the screen.
         backButton = Button(self.menu, text="Back to menu.", command=self.InsertMenuWidgets, padx=32, pady=25, fg="#7AF9F9", bg="#480653", font=custom_fontButton)
-        backButton_window = my_canvas.create_window(170, 250, anchor='nw', window=backButton)
+        backButton_window = my_canvas.create_window(160, 380, anchor='nw', window=backButton)
 
 # Main function.
 def main():

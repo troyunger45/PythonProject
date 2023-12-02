@@ -477,7 +477,7 @@ class Game:
         my_canvas.create_text(635, 225, text="Alternate Conclusions!", font=custom_fontLabel, fill="#02A5C8", anchor="center")
         my_canvas.create_text(650, 263, text="Based on what choices are selected, you can have\none of two different conclusions. This game forces you\nmake tough calls that can impact your future!", font=custom_fontButton, fill="#7AF9F9", anchor="center")
         my_canvas.create_text(635, 305, text="Credits and mentions:", font=custom_fontLabel, fill="#02A5C8", anchor="center")
-        my_canvas.create_text(535, 360, text="* Troy Unger\n* Matt Sickles\n* Gavin Barnard\n* Manuel Gardea\n* Adian Chapman", font=custom_fontButton, fill="#7AF9F9", anchor="center")
+        my_canvas.create_text(635, 360, text="* Troy Unger - Lead Developer\n* Matt Sickles - Project Leader/Story Author\n* Gavin Barnard - Developer\n* Manuel Gardea - Developer\n* Adian Chapman - Developer", font=custom_fontButton, fill="#7AF9F9", anchor="center")
         # Creating and placing the back button to the screen.
         backButton = Button(self.menu, text="Back to menu.", command=self.InsertMenuWidgets, padx=32, pady=25, fg="#7AF9F9", bg="#480653", font=custom_fontButton)
         backButton_window = my_canvas.create_window(160, 380, anchor='nw', window=backButton)

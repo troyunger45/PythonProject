@@ -272,7 +272,9 @@ class Game:
                 notValid = True
             # Increment scenarioCount.
             self.scenarioCount = self.scenarioCount + 1
-            if fight:
+            if fight and self.closeFight:
+                self.SetImages()
+            elif fight:
                 self.menu.after(1500, self.SetImages)
             elif notValid == False:
                 self.SetImages()

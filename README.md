@@ -743,7 +743,9 @@ class Game:
         backButton_window = my_canvas.create_window(160, 380, anchor='nw', window=backButton)
 
 # Main function.
+
 def main():
+
     # Creates the menu window.
     menu = Tk()
     # Creates Game object to run the first object of the game.
@@ -752,5 +754,7 @@ def main():
     menu.mainloop()
 
 # Calling main function.
+
 main()
+
 

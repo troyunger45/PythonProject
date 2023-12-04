@@ -741,9 +741,7 @@ class Game:
         # Creating and placing the back button to the screen.
         backButton = Button(self.menu, text="Back to menu.", command=self.InsertMenuWidgets, padx=32, pady=25, fg="#7AF9F9", bg="#480653", font=custom_fontButton)
         backButton_window = my_canvas.create_window(160, 380, anchor='nw', window=backButton)
-
-# Main function.
-
+        
 def main():
 
     # Creates the menu window.
@@ -752,8 +750,6 @@ def main():
     game_one = Game(menu)
     # Calling the main loop for the GUI to run.
     menu.mainloop()
-
-# Calling main function.
 
 main()
 

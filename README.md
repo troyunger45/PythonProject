@@ -2,6 +2,8 @@
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/68bcc20d-6d51-4c53-9224-b1953b40c9f7)
 
+![image](https://github.com/troyunger45/PythonProject/assets/125838792/d06631ea-0616-4252-b483-019ffbbaf0fe)
+
 Presentation Video:
 
 https://drive.google.com/file/d/1FWB98y04_wx8-1Bisp2-4t9FVHUtSxwg/view?usp=gmail

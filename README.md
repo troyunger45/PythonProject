@@ -132,156 +132,253 @@ o	Calls the main loop for the GUI to run
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/ef976bbc-0470-4b3d-878f-430fb77f1a2e)
 
 Test Case 1: Starting the Game
+
 Objective:
+
 Ensure that the game initializes correctly when the "Start Game!" button is pressed.
- Input:
+
+Input:
+ 
 Press the "Start Game!" button.
+
  Expected Output:
- -The game screen is displayed with the first scenario.
- -The player is prompted with the first scenario and choices.
+ 
+ - The game screen is displayed with the first scenario.
+ 
+ - The player is prompted with the first scenario and choices.
  
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/7bffc417-252c-4a99-8bd2-d4c6de98060f)
 
 Test Case 2: Intro/Picking up Items
+
 Objective:
+
 Verify that the game responds appropriately when the player chooses the first option in the Intro/Item1 scenario.
+
 Input:
-Set the scenario choices to ["first-aid kit", "light plate carrier"].
-Press the "Display response." button.
+
+Set the scenario choices to ["first-aid kit", "light plate carrier"]. Press the "Display response." button.
+
 Expected Output:
--The item is acquired, and its effect is applied to the player's abilities.
--The game displays the corresponding scenario.
--The game updates the character's inventory accordingly.
+
+- The item is acquired, and its effect is applied to the player's abilities.
+
+- The game displays the corresponding scenario.
+
+- The game updates the character's inventory accordingly.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/19731d01-0189-4bee-833b-0a9f7501036f)
 
 Test Case 3: Story Progression
+
 Objective:
+
 Verify that the game responds appropriately when the player chooses the second option in the Enemy1 scenario.
+
 Input:
-Set the scenario choices to ["fight", "escape"].
-Press the "Display response." button.
+
+Set the scenario choices to ["fight", "escape"]. Press the "Display response." button.
+
 Expected Output:
--The game displays the corresponding scenario.
--The game progresses to the next scenario or conclusion based on the player's choice.
--The character's health and enemy's health may be updated based on the chosen action. 
+
+- The game displays the corresponding scenario.
+
+- The game progresses to the next scenario or conclusion based on the player's choice.
+
+- The character's health and enemy's health may be updated based on the chosen action. 
+
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/e0d78382-09cd-4130-85ab-bb067b268d2f)
 
 Test Case 4: Choosing "Fight" Scenario 
+
 Objective:
+
 Verify that the game responds appropriately when the player chooses "fight" in the Enemy1 scenario, and a new window pops up for combat.
+
 Input:
-Set the scenario choices to ["fight", "escape"].
-Select the "fight" option.
+
+Set the scenario choices to ["fight", "escape"]. Select the "fight" option.
+
 Expected Output:
--The game displays the corresponding scenario for combat.
--A new window pops up, simulating the combat interface.
--The player can interact with the combat window, such as choosing attacks, defending, run or using items.
--The combat outcome affects the character's and enemy's health.
--After the combat is resolved, the main game window updates to reflect the consequences of the fight.
--The game progresses to the next scenario or conclusion based on the outcome of the combat.
+
+- The game displays the corresponding scenario for combat.
+
+- A new window pops up, simulating the combat interface.
+
+- The player can interact with the combat window, such as choosing attacks, defending, run or using items.
+
+- The combat outcome affects the character's and enemy's health.
+
+- After the combat is resolved, the main game window updates to reflect the consequences of the fight.
+
+- The game progresses to the next scenario or conclusion based on the outcome of the combat.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/b59510e1-16b0-4582-a6d8-8544ec7f5210)
 
 Test Case 5: Initiating an Attack in Combat Scenario
+
 Objective:
+
 Verify that the game responds appropriately when the player chooses to attack during a combat scenario.
+
 Input:
-Set the game state to a combat scenario, initiated by choosing "fight" scenario.
-Within the combat window, select the "Attack" option.
+
+Set the game state to a combat scenario, initiated by choosing "fight" scenario. Within the combat window, select the "Attack" option.
+
 Expected Output:
--The player's attack is resolved, and damage is dealt to the enemy based on the player's weapon and other relevant factors.
--The enemy's health is updated accordingly.
--The enemy retaliates with its attack, and the player's health is adjusted based on the enemy's attack power and the player's defense.
--The combat window displays the outcome of the exchange, showing damage dealt and received.
--If either the player or enemy's health reaches zero or below, the combat window closes.
--The main game window updates to reflect the consequences of the combat.
--The game progresses to the next scenario or conclusion based on the outcome of the combat.
+
+- The player's attack is resolved, and damage is dealt to the enemy based on the player's weapon and other relevant factors.
+
+- The enemy's health is updated accordingly.
+
+- The enemy retaliates with its attack, and the player's health is adjusted based on the enemy's attack power and the player's defense.
+
+- The combat window displays the outcome of the exchange, showing damage dealt and received.
+
+- If either the player or enemy's health reaches zero or below, the combat window closes.
+
+- The main game window updates to reflect the consequences of the combat.
+
+- The game progresses to the next scenario or conclusion based on the outcome of the combat.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/d92c2dd9-21e1-4fb9-be46-f93bf853cbd8)
 
 Test Case 6: Exiting Fight Menu Without Action and Typing in Main Box
+
 Objective: Ensure that the game handles the scenario where the player exits the fight menu without taking any action and then attempts to input a choice in the main box.
+
 Input:
+
 Enter a fight scenario.
+
 Open the fight menu.
+
 Close the fight menu without choosing any action.
+
 Expected Output:
--The game recognizes the exit from the fight menu without action and provides a message “You closed the fight window”.
--The scenario count remains the same, and the player can input a valid choice.
+
+- The game recognizes the exit from the fight menu without action and provides a message “You closed the fight window”.
+
+- The scenario count remains the same, and the player can input a valid choice.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/114cc16e-61ef-4ad6-9179-e6979591d3de)
 
 Test Case 7: Choosing to Run
+
 Objective:
+
 Confirm that the game handles the player's decision to run from a scenario.
- Input:
+
+Input:
+ 
 During a scenario where the player can run, choose the option to run.
- Expected Output:
--The game acknowledges the player's decision, and either progresses to the next scenario or concludes.
+
+Expected Output:
+ 
+- The game acknowledges the player's decision, and either progresses to the next scenario or concludes.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/02582ee2-21c0-42c4-82a3-8d4962142e81)
 
 Test Case 8: Invalid Input
+
 Objective:
+
 Verify that the game handles invalid input appropriately.
+
 Input:
+
 Type an invalid choice (e.g., "invalid") in the input field.
+
 Press the "Display response." button.
- Expected Output:
+
+Expected Output:
+ 
 - The game recognizes the invalid input and provides a message.
--The scenario count remains the same, and the player can input a valid choice.
+  
+- The scenario count remains the same, and the player can input a valid choice.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/cac57bd1-0950-4d0a-a4b1-3fddbddfda9e)
 
 Test Case 9: Successfully Defending
+
 Objective:
+
 Confirm that the player can successfully defend during a fight scenario. 
+
 Input:
+
 During a fight scenario, choose the option to defend. 
+
 Expected Output:
- The player successfully defends, and the defense bonus is applied.
-The player takes a stance and gains health
+
+- The player successfully defends, and the defense bonus is applied.
+ 
+- The player takes a stance and gains health
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/425f89fc-412b-4578-af91-ed5dc30bf5bb)
 
 Test Case 10: Unsuccessful Defending
+
 Objective:
+
 Ensure that the game handles the player attempting to defend twice in a row.
- Input:
+
+Input:
+ 
 During a fight scenario, choose the option to defend after already defending in the previous turn.
- Expected Output:
- The game recognizes the invalid action and provides a message.
-The scenario count remains the same, and the player can input a valid choice.
+
+Expected Output:
+ 
+- The game recognizes the invalid action and provides a message.
+ 
+- The scenario count remains the same, and the player can input a valid choice.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/f52da144-2152-4ef7-a053-35b20cce3ce4)
 
 Test Case 11: Defeating an Enemy in Combat
+
 Objective:
+
 Verify that the game responds appropriately when the player chooses to fight and successfully defeats a regular enemy in combat.
 Input:
+
 Set the game state to a combat scenario, specifically the "Fight" choice in Enemy1 or Enemy2 scenarios.
+
 Ensure that the player has sufficient health, attack capabilities, and any required items.
+
 Choose the "Fight" option during the combat scenario.
+
 Expected Output:
--The player engages in combat with the enemy (Ex.Hyperion guard, Hyperion elite trooper and Final Boss’).
--If the player's health, attack capabilities, and any items are sufficient, the player successfully defeats the enemy.
--A victory message is displayed, narrating the player's success in defeating the enemy.
--The game progresses to the next scenario
+
+- The player engages in combat with the enemy (Ex.Hyperion guard, Hyperion elite trooper and Final Boss’).
+
+- If the player's health, attack capabilities, and any items are sufficient, the player successfully defeats the enemy.
+
+- A victory message is displayed, narrating the player's success in defeating the enemy.
+
+- The game progresses to the next scenario
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/379532f4-3f54-4862-9357-c5c3afbcbeca)
 
 Test Case 12: Completing the Game
+
 Objective:
+
 Verify that the game can be completed by progressing through different scenarios.
- Input:
+
+Input:
+ 
 Progress through the game by making different choices.
 Defeat Boss
+
 Enter Yes or No
+
 Reach the conclusion of the game.
- Expected Output:
- The game displays the conclusion message.
+
+Expected Output:
+
+- The game displays the conclusion message.
  
  
  ![image](https://github.com/troyunger45/PythonProject/assets/125838792/472eec27-caa3-4862-a827-ef3fcd65a47a)

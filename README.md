@@ -27,8 +27,9 @@ Prepare the following Diagrams (Design Models):
 Step 2 Coding and Testing 
 
 ●	We have class called Game 
-●	 The def _init_ is the Constructor; 
-This defines the class attributes, and houses the three parallel stories array 
+
+●	 The def _init_ is the Constructor; This defines the class attributes, and houses the three parallel stories array. 
+
 ●	It also calls the insert menu widget which display the menu and SetImages 
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/0ffb7680-5bd8-4d7c-aadf-93899226185b)
@@ -36,66 +37,96 @@ This defines the class attributes, and houses the three parallel stories array
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/26ba81e1-7a2a-47c3-84de-637dc8ead144)
 
 ●	The def InsertMenuWidgets, this code basically setting the format of the window for the menu to be displayed
+
 ●	Part of the code destroy the menu window(widget) if it's not empty and set the counter back to the start
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/e28fbdf5-d014-45f4-b59f-e4f214494dc9)
  
 ●	The def InsertGameWidgets, this part of the code is what sets the screen for the game to be played, by creating the visuals for the game window, resetting everything for beginning of the game, creating the text box that the user puts their inputs
+
 ●	Part of the code destroy the menu window(widget) if it's not empty 
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/d7765e63-5a6c-473d-be42-1be160b28208)
  
-●	The def ProcessUserInput, this part of the code processes the user input and displays the response to it 
+●	The def ProcessUserInput, this part of the code processes the user input and displays the response to it
+
 ●	The first part of the code enables the text box and also clears the previous text
-●	The next part of the code does is decides if the game cycle has been completed or not, it does this by 
-o	checking if the user input matches either of the choices for the current scenario, 
+
+●	The next part of the code does is decides if the game cycle has been completed or not, it does this by
+
+o	checking if the user input matches either of the choices for the current scenario,
+
 o	determines when the player will need to fight or they picked up an Item
+
 o	increment scenarioCount, and determines whether to display the next scenario or the conclusion
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/c13afad8-db94-4388-95fa-77f3da7f972f)
 
 ●	The def ResetHealth, is the code that Resets the character and enemy health back to the start of the game if they have died
+
 ●	The def SetImage, is the code that basically decides when to change the images
 
  ![image](https://github.com/troyunger45/PythonProject/assets/125838792/da074b65-1a4c-42fe-b5be-678f92116432)
  
 ●	The def SetDamage, is the code that manages player and enemy damage for each point in the game
+
 o	Selects base player and enemy damaged based on the enemy type 
+
 o	Apply the swords damage bonus if the player has picked up the sword
+
 ●	The def SetDefense, is the code that manages player and enemy defense for each point in the game
-o	Selects base defense based on the enemy type.
+
+o	Selects base defense based on the enemy type
+
 o	Apply the shield's defense bonus if the player has picked up the shield
+
 o	Apply the trap defense decrease if the player runs into the trap
+
 ●	The def OnFightWindowClose, is the code that handles what happens when the fight window is exited by user, which basically mean it handles any necessary cleanup or actions when the fight window is closed
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/141ac370-5545-4264-8c90-cb813dff1b13)
  
 ●	The def Fight, it is the code that deals with everything that involves with the player fight against the enemy
+
 ●	First part of the code, create a new Toplevel window for the fight scenario and binds the closing of the window to the function
+
 ●	Second part of the code, set up the fight scenarios for all enemy types, creating and placing the text box to the screen, the entry for user input to the screen, and a button to process the user input and close the window.
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/d1c920e3-78ae-4d77-a0ae-4f3be991c191)
  
 ●	The next part of the def Fight  code is continuously checking of the  player's and enemy’s health during the fight, and updating the fight box with current health information
+
 ●	This def houses the ability of the user to fight , defend, or run from the enemy, manages the amount of damage that happened to the player and enemy, and if the user had a successful defend
+
 ●	The last part of the code deals with what happens when player's health is 0 or below, handles the death
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/bfc9ff9e-19b8-4d4f-8bd2-51794600a9ed)
  
 ●	The def ProcessFight, this code processes the user's input in the fight scenario 
+
 ●	 This code only executes if the player is still alive and deals with when the users selects attack, defend, and run in the fight scenario
+
 o	When the user selects 'attack' for the fight, it sets proper player and enemy damage, flags proper boolean values, and increase health count to know we are no longer on our first turn.
+
 o	When the user selects 'defend' for the fight, sets proper defense value, decides if the player has selected defend once before, and if it wasn’t then health is increased, Flags proper boolean values, and increase health count to know we are no longer on our first turn
+
 o	 When the user selects 'run' for the fight, Flags proper boolean values.
+
 o	The last part is when the user selects an invalid response for the fight and the code that update the display
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/bcd4da0c-94d2-4e4b-9256-bdb4b8bd62be)
 
-●	The def InsertDecriptionWidgets, this part of the code sets the screen for the description to be displayed. It set the format of the window along with creating the canvas with the background image, and creating and placing the description text to screen and  the back button to the screen
+●	The def InsertDecriptionWidgets, this part of the code sets the screen for the description to be displayed. It set the format of the window along with creating the 
+canvas with the background image, and creating and placing the description text to screen and  the back button to the screen
+
 ●	It clears the menu window if it’s not empty
+
 ●	The def Main, it is the main function that lets the game run
+
 o	Creates the menu window
+
 o	Creates Game object to run the first object of the game.
+
 o	Calls the main loop for the GUI to run
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/ef976bbc-0470-4b3d-878f-430fb77f1a2e)

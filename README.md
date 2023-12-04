@@ -1,5 +1,7 @@
 # PythonProject
 
+![image](https://github.com/troyunger45/PythonProject/assets/125838792/68bcc20d-6d51-4c53-9224-b1953b40c9f7)
+
 Presentation Video:
 
 https://drive.google.com/file/d/1FWB98y04_wx8-1Bisp2-4t9FVHUtSxwg/view?usp=gmail

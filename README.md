@@ -4,16 +4,20 @@ https://drive.google.com/file/d/1FWB98y04_wx8-1Bisp2-4t9FVHUtSxwg/view?usp=gmail
 Prepare the following Diagrams (Design Models):
 
 1.	Component diagram
-   ![image](https://github.com/troyunger45/PythonProject/assets/125838792/33d850c0-c0f0-4371-93f1-5621e01c5ce2)
+   
+![image](https://github.com/troyunger45/PythonProject/assets/125838792/33d850c0-c0f0-4371-93f1-5621e01c5ce2)
 
 2.	Deployment diagram
-   ![image](https://github.com/troyunger45/PythonProject/assets/125838792/b445b2d4-5bfe-4273-8975-23d5484da847)
+   
+![image](https://github.com/troyunger45/PythonProject/assets/125838792/b445b2d4-5bfe-4273-8975-23d5484da847)
 
 3.	Sequence diagrams,
-   ![image](https://github.com/troyunger45/PythonProject/assets/125838792/d6104e1b-4dbc-41a5-9036-07d508994118)
+   
+![image](https://github.com/troyunger45/PythonProject/assets/125838792/d6104e1b-4dbc-41a5-9036-07d508994118)
 
 4.	Package diagram…
-   ![image](https://github.com/troyunger45/PythonProject/assets/125838792/94aa77c7-1c93-4441-b9db-40aad0c31366)
+   
+![image](https://github.com/troyunger45/PythonProject/assets/125838792/94aa77c7-1c93-4441-b9db-40aad0c31366)
 
 Step 2 Coding and Testing 
 
@@ -21,16 +25,19 @@ Step 2 Coding and Testing
 ●	 The def _init_ is the Constructor; 
 This defines the class attributes, and houses the three parallel stories array 
 ●	It also calls the insert menu widget which display the menu and SetImages 
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/0ffb7680-5bd8-4d7c-aadf-93899226185b)
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/26ba81e1-7a2a-47c3-84de-637dc8ead144)
 
 ●	The def InsertMenuWidgets, this code basically setting the format of the window for the menu to be displayed
 ●	Part of the code destroy the menu window(widget) if it's not empty and set the counter back to the start
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/e28fbdf5-d014-45f4-b59f-e4f214494dc9)
  
 ●	The def InsertGameWidgets, this part of the code is what sets the screen for the game to be played, by creating the visuals for the game window, resetting everything for beginning of the game, creating the text box that the user puts their inputs
 ●	Part of the code destroy the menu window(widget) if it's not empty 
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/d7765e63-5a6c-473d-be42-1be160b28208)
  
 ●	The def ProcessUserInput, this part of the code processes the user input and displays the response to it 
@@ -39,10 +46,12 @@ This defines the class attributes, and houses the three parallel stories array
 o	checking if the user input matches either of the choices for the current scenario, 
 o	determines when the player will need to fight or they picked up an Item
 o	increment scenarioCount, and determines whether to display the next scenario or the conclusion
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/c13afad8-db94-4388-95fa-77f3da7f972f)
 
 ●	The def ResetHealth, is the code that Resets the character and enemy health back to the start of the game if they have died
 ●	The def SetImage, is the code that basically decides when to change the images
+
  ![image](https://github.com/troyunger45/PythonProject/assets/125838792/da074b65-1a4c-42fe-b5be-678f92116432)
  
 ●	The def SetDamage, is the code that manages player and enemy damage for each point in the game
@@ -53,16 +62,19 @@ o	Selects base defense based on the enemy type.
 o	Apply the shield's defense bonus if the player has picked up the shield
 o	Apply the trap defense decrease if the player runs into the trap
 ●	The def OnFightWindowClose, is the code that handles what happens when the fight window is exited by user, which basically mean it handles any necessary cleanup or actions when the fight window is closed
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/141ac370-5545-4264-8c90-cb813dff1b13)
  
 ●	The def Fight, it is the code that deals with everything that involves with the player fight against the enemy
 ●	First part of the code, create a new Toplevel window for the fight scenario and binds the closing of the window to the function
 ●	Second part of the code, set up the fight scenarios for all enemy types, creating and placing the text box to the screen, the entry for user input to the screen, and a button to process the user input and close the window.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/d1c920e3-78ae-4d77-a0ae-4f3be991c191)
  
 ●	The next part of the def Fight  code is continuously checking of the  player's and enemy’s health during the fight, and updating the fight box with current health information
 ●	This def houses the ability of the user to fight , defend, or run from the enemy, manages the amount of damage that happened to the player and enemy, and if the user had a successful defend
 ●	The last part of the code deals with what happens when player's health is 0 or below, handles the death
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/bfc9ff9e-19b8-4d4f-8bd2-51794600a9ed)
  
 ●	The def ProcessFight, this code processes the user's input in the fight scenario 
@@ -71,6 +83,7 @@ o	When the user selects 'attack' for the fight, it sets proper player and enemy 
 o	When the user selects 'defend' for the fight, sets proper defense value, decides if the player has selected defend once before, and if it wasn’t then health is increased, Flags proper boolean values, and increase health count to know we are no longer on our first turn
 o	 When the user selects 'run' for the fight, Flags proper boolean values.
 o	The last part is when the user selects an invalid response for the fight and the code that update the display
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/bcd4da0c-94d2-4e4b-9256-bdb4b8bd62be)
 
 ●	The def InsertDecriptionWidgets, this part of the code sets the screen for the description to be displayed. It set the format of the window along with creating the canvas with the background image, and creating and placing the description text to screen and  the back button to the screen
@@ -79,6 +92,7 @@ o	The last part is when the user selects an invalid response for the fight and t
 o	Creates the menu window
 o	Creates Game object to run the first object of the game.
 o	Calls the main loop for the GUI to run
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/ef976bbc-0470-4b3d-878f-430fb77f1a2e)
 
 Test Case 1: Starting the Game
@@ -89,6 +103,7 @@ Press the "Start Game!" button.
  Expected Output:
  -The game screen is displayed with the first scenario.
  -The player is prompted with the first scenario and choices.
+ 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/7bffc417-252c-4a99-8bd2-d4c6de98060f)
 
 Test Case 2: Intro/Picking up Items
@@ -101,6 +116,7 @@ Expected Output:
 -The item is acquired, and its effect is applied to the player's abilities.
 -The game displays the corresponding scenario.
 -The game updates the character's inventory accordingly.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/19731d01-0189-4bee-833b-0a9f7501036f)
 
 Test Case 3: Story Progression
@@ -113,6 +129,7 @@ Expected Output:
 -The game displays the corresponding scenario.
 -The game progresses to the next scenario or conclusion based on the player's choice.
 -The character's health and enemy's health may be updated based on the chosen action. 
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/e0d78382-09cd-4130-85ab-bb067b268d2f)
 
 Test Case 4: Choosing "Fight" Scenario 
@@ -128,6 +145,7 @@ Expected Output:
 -The combat outcome affects the character's and enemy's health.
 -After the combat is resolved, the main game window updates to reflect the consequences of the fight.
 -The game progresses to the next scenario or conclusion based on the outcome of the combat.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/b59510e1-16b0-4582-a6d8-8544ec7f5210)
 
 Test Case 5: Initiating an Attack in Combat Scenario
@@ -144,6 +162,7 @@ Expected Output:
 -If either the player or enemy's health reaches zero or below, the combat window closes.
 -The main game window updates to reflect the consequences of the combat.
 -The game progresses to the next scenario or conclusion based on the outcome of the combat.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/d92c2dd9-21e1-4fb9-be46-f93bf853cbd8)
 
 Test Case 6: Exiting Fight Menu Without Action and Typing in Main Box
@@ -155,6 +174,7 @@ Close the fight menu without choosing any action.
 Expected Output:
 -The game recognizes the exit from the fight menu without action and provides a message “You closed the fight window”.
 -The scenario count remains the same, and the player can input a valid choice.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/114cc16e-61ef-4ad6-9179-e6979591d3de)
 
 Test Case 7: Choosing to Run
@@ -164,6 +184,7 @@ Confirm that the game handles the player's decision to run from a scenario.
 During a scenario where the player can run, choose the option to run.
  Expected Output:
 -The game acknowledges the player's decision, and either progresses to the next scenario or concludes.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/02582ee2-21c0-42c4-82a3-8d4962142e81)
 
 Test Case 8: Invalid Input
@@ -175,6 +196,7 @@ Press the "Display response." button.
  Expected Output:
 - The game recognizes the invalid input and provides a message.
 -The scenario count remains the same, and the player can input a valid choice.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/cac57bd1-0950-4d0a-a4b1-3fddbddfda9e)
 
 Test Case 9: Successfully Defending
@@ -185,6 +207,7 @@ During a fight scenario, choose the option to defend.
 Expected Output:
  The player successfully defends, and the defense bonus is applied.
 The player takes a stance and gains health
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/425f89fc-412b-4578-af91-ed5dc30bf5bb)
 
 Test Case 10: Unsuccessful Defending
@@ -195,6 +218,7 @@ During a fight scenario, choose the option to defend after already defending in 
  Expected Output:
  The game recognizes the invalid action and provides a message.
 The scenario count remains the same, and the player can input a valid choice.
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/f52da144-2152-4ef7-a053-35b20cce3ce4)
 
 Test Case 11: Defeating an Enemy in Combat
@@ -209,6 +233,7 @@ Expected Output:
 -If the player's health, attack capabilities, and any items are sufficient, the player successfully defeats the enemy.
 -A victory message is displayed, narrating the player's success in defeating the enemy.
 -The game progresses to the next scenario
+
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/379532f4-3f54-4862-9357-c5c3afbcbeca)
 
 Test Case 12: Completing the Game
@@ -221,14 +246,21 @@ Enter Yes or No
 Reach the conclusion of the game.
  Expected Output:
  The game displays the conclusion message.
-![image](https://github.com/troyunger45/PythonProject/assets/125838792/472eec27-caa3-4862-a827-ef3fcd65a47a)
+ 
+ 
+ ![image](https://github.com/troyunger45/PythonProject/assets/125838792/472eec27-caa3-4862-a827-ef3fcd65a47a)
+
 
 ![image](https://github.com/troyunger45/PythonProject/assets/125838792/4e87cba4-f7e3-4b02-ad28-96b5b4205e32)
 
 Code:
+
 from tkinter import *
+
 import random
+
 class Game:
+
 
     def __init__(self, menu):
         # Adds formatting for the menu window.
